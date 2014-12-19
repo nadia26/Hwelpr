@@ -1,6 +1,4 @@
 from flask import Flask, flash, render_template, request, redirect, url_for, session, escape
-import api
-import mongo
 
 app = Flask(__name__)
 app.secret_key = 'secret'
