@@ -27,7 +27,17 @@ def home():
             if request.form['b']=="Cancel":
                 return render_template("home.html", message=message)
     
+@app.route("/welcome",methods=["GET","POST"])
+def welcome():
+    if request.method=="GET":
+        return render_template("welcome.html")
+    else:
+        #there will be other buttons here
+        if request.form['b']=="Log Out":
+            return redirect(url_for('logout'))
+
 if __name__=="__main__":
     app.debug=True
     app.run()
+
         
