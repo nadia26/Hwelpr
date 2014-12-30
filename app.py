@@ -32,9 +32,48 @@ def welcome():
     if request.method=="GET":
         return render_template("welcome.html")
     else:
+        return render_template("welcome.html")
         #there will be other buttons here
-        if request.form['b']=="Log Out":
-            return render_template("home.html")
+
+@app.route("/profile", methods=["GET","POST"])
+def profile():
+    if request.method=="GET":
+        return render_template("profile.html")
+    else:
+         return render_template("welcome.html")
+        #there will be other buttons here
+
+@app.route("/addhw", methods=["GET","POST"])
+def addhw():
+    if request.method=="GET":
+        return render_template("addhw.html")
+    else:
+        return render_template("welcome.html")
+        #there will be other buttons here
+
+@app.route("/myhw", methods=["GET","POST"])
+def myhw():
+    if request.method=="GET":
+        return render_template("myhw.html")
+    else:
+        return render_template("welcome.html")
+        #there will be other buttons here
+
+@app.route("/myrecs", methods=["GET","POST"])
+def myrecs():
+    if request.method=="GET":
+        return render_template("myrecs.html")
+    else:
+        return render_template("welcome.html")
+        #there will be other buttons here
+
+@app.route("/search", methods=["GET","POST"])
+def search():
+    if request.method=="GET":
+        return render_template("search.html")
+    else:
+        return render_template("welcome.html")
+        #there will be other buttons here
 
 if __name__=="__main__":
     app.debug=True
