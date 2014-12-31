@@ -1,0 +1,12 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html lang="en">
+
+ <head>
+<link rel="stylesheet" type="text/css" href="{{ url_for( 'static',filename='css/bootstrap-theme.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+<title>Homework Helper</title>
+</head>
+
+<body>
+<h1>HELLO!</h1>
+</body>

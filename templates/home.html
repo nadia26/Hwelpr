@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN"><!DOCTYPE html>
+
+<html lang="en">
+  
+  <head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for( 'static',filename='css/bootstrap-theme.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <title>HWelpr</title>
+  </head>
+  
+  <body>
+    <div class="container" style="max-width:730px;">
+     
+      <h1>HWelpr</h1>
+
+      <div class="jumbotron" style="max-width:730px;">
+	The simple, educational, and classy way to get and give help on homework. 
+
+      <h4>{{message}}</h4>
+
+      <div class="jumbotron" style="max-width:730px;">
+        <h2>Log In</h2>
+        <form role="form" class="form-horizontal" method="POST">
+          <div class="form-group">
+            <p><input type="text" class="form-control" name="logusername" placeholder="Username"></p>
+            <p><input type="password" class="form-control" name="logpassword" placeholder="Password"></p>
+            <p><input type="submit" name="b" class="btn btn-default" value="Log In">
+  	      <input type="submit" name="b" class="btn btn-default" value="Cancel"></p>
+          </div>
+	</form>
+      </div>
+
+      <div class="jumbotron" style="max-width:730px;">
+	<h4>Don't have an account?</h4>
+        <h2>Sign Up</h2>
+        <form role="form" class="form-horizontal" method="POST">
+          <div class="form-group">
+            <p><input type="text" class="form-control" name="signusername" placeholder="Username"></p>
+            <p><input type="password" class="form-control" name="signpassword" placeholder="Password"></p>
+	    <p><input type="password" class="form-control" name="signpassword2" placeholder="Confirm Password"></p>
+	    <p><input type="text" class="form-control" name="name" placeholder="Name"></p>
+            <p><input type="submit" name="b" class="btn btn-default" value="Sign Up">
+  	      <input type="submit" name="b" class="btn btn-default" value="Cancel"></p>
+          </div>
+	</form>
+      </div>
+  </body>
+
+</html>
