@@ -7,11 +7,16 @@ rating system/user statistics/assigning medals
 notifications (suggest homeworks, medals won, requests, deadlines) 
 
 TIMELINE:
-1. Very basic blog engine, front-end: making an account, logging in, creating a post, setting up/editing a profile; without the database stuff, just using dummy placeholders (Claire, with planning assistance from Veronika)--> Have done by Saturday night, 12/28\n
-2. Mongodb database stuff, fitting into the model that Claire built with the front-end design (Fish)--> Have done by Tuesday night, 12/30
-2. User interactions: subjects vs tags, incomplete vs in progress vs complete, claiming a homework, editing a homework, getting points for homework under specific subjects 
-3. Super specifics: Suggestion system/newsfeed type thing, point algorithm/rating system, dealine system, notifications
-4. Contained editing system 
-5. Maybe if we have time: medal system, messaging/email notifications 
+1. Very basic blog engine, front-end: making an account, logging in, creating a post, setting up/editing a profile; without the database stuff, just using dummy placeholders (Claire, with planning assistance from Veronika)--> Have done by Saturday night, 12/28 (Done)
+2. Mongodb database stuff, fitting into the model that Claire built with the front-end design (Fish)--> Have done by Tuesday night, 12/30 (Done)
+3. posting capabilities 1/6
+4. claiming/status 1/8
+5. submitting
+-----we'd like to be here by monday-----
+6.point system
+7. notifications
+8. tagging/suggesting/search by tag
+9. contained editing
+10. messaging/email notifications
 
 
