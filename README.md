@@ -13,7 +13,7 @@ TIMELINE:
 4. claiming/status 1/8
 5. submitting
 -----we'd like to be here by monday-----
-6.point system
+6.point system/medals
 7. notifications
 8. tagging/suggesting/search by tag
 9. contained editing
