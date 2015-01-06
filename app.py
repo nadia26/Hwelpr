@@ -57,11 +57,11 @@ def profile():
     if request.method=="GET":
         return render_template("profile.html")
     else:
-         if request.form['b']=="Log Out":
+        if request.form['b']=="Log Out":
             session.pop("myuser", None)
             return redirect(url_for('home'))
-        #there will be other buttons here
         else:
+            #there will be other buttons here
             return render_template("welcome.html")
 
 @app.route("/addhw", methods=["GET","POST"])
