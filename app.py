@@ -15,10 +15,6 @@ def home():
         if request.form['b']=="Log In":
             username = request.form["logusername"]
             password = request.form["logpassword"]
-<<<<<<< HEAD
-            #this is where all the authentication mongo stuff would go 
-            return redirect(url_for('welcome'))
-=======
             #mongo authentication stuff:
             valid_user = authenticate(username,password)
             if not(valid_user) and not(username==None):
@@ -26,21 +22,11 @@ def home():
             else:
                 session['myuser']=username
                 return redirect(url_for('welcome'))
->>>>>>> bb4b0370706378117ac20f49039e88d87bef92ed
         if request.form['b']=="Sign Up":
             username = request.form["signusername"]
             password = request.form["signpassword"]
             password2 = request.form["signpassword2"]
             name = request.form["name"]
-<<<<<<< HEAD
-            #this is where all the adding user mongo stuff would go 
-            message = "Registration Sucessful! Log In to get started." 
-            return render_template("home.html", message=message)
-        if request.form['b']=="Cancel":
-            return render_template("home.html", message=message)
-    
-@app.route("/welcome", methods=["GET","POST"])
-=======
             #mongo adding user stuff:
             if (len(username)<3 or len(password)<3):
                 return render_template("home.html",message="Please fill in required elements. Each required element must have at least 3 characters.")
@@ -55,58 +41,77 @@ def home():
             return render_template("home.html", message=message)
 
 @app.route("/welcome",methods=["GET","POST"])
->>>>>>> bb4b0370706378117ac20f49039e88d87bef92ed
 def welcome():
     if request.method=="GET":
         return render_template("welcome.html")
     else:
-        return render_template("welcome.html")
+        if request.form['b']=="Log Out":
+            session.pop("myuser", None)
+            return redirect(url_for('home'))
         #there will be other buttons here
+        else:
+            return render_template("welcome.html")
 
 @app.route("/profile", methods=["GET","POST"])
 def profile():
     if request.method=="GET":
         return render_template("profile.html")
     else:
-         return render_template("welcome.html")
+         if request.form['b']=="Log Out":
+            session.pop("myuser", None)
+            return redirect(url_for('home'))
         #there will be other buttons here
+        else:
+            return render_template("welcome.html")
 
 @app.route("/addhw", methods=["GET","POST"])
 def addhw():
     if request.method=="GET":
         return render_template("addhw.html")
     else:
-        return render_template("welcome.html")
+        if request.form['b']=="Log Out":
+            session.pop("myuser", None)
+            return redirect(url_for('home'))
         #there will be other buttons here
+        else:
+            return render_template("welcome.html")
 
 @app.route("/myhw", methods=["GET","POST"])
 def myhw():
     if request.method=="GET":
         return render_template("myhw.html")
     else:
-        return render_template("welcome.html")
+        if request.form['b']=="Log Out":
+            session.pop("myuser", None)
+            return redirect(url_for('home'))
         #there will be other buttons here
+        else:
+            return render_template("welcome.html")
 
 @app.route("/myrecs", methods=["GET","POST"])
 def myrecs():
     if request.method=="GET":
         return render_template("myrecs.html")
     else:
-        return render_template("welcome.html")
+        if request.form['b']=="Log Out":
+            session.pop("myuser", None)
+            return redirect(url_for('home'))
         #there will be other buttons here
+        else:
+            return render_template("welcome.html")
 
 @app.route("/search", methods=["GET","POST"])
 def search():
     if request.method=="GET":
         return render_template("search.html")
-    if request.form['b']=="Log Out":
-        session.pop("myuser", None)
-        return redirect(url_for('home'))
     else:
-        return render_template("welcome.html")
+        if request.form['b']=="Log Out":
+            session.pop("myuser", None)
+            return redirect(url_for('home'))
         #there will be other buttons here
+        else:
+            return render_template("welcome.html")
 
-        
 
 def getpword(uname):
     names = db.info.find()
