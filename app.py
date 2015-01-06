@@ -99,14 +99,14 @@ def myrecs():
 def search():
     if request.method=="GET":
         return render_template("search.html")
+    if request.form['b']=="Log Out":
+        session.pop("myuser", None)
+        return redirect(url_for('home'))
     else:
         return render_template("welcome.html")
         #there will be other buttons here
-<<<<<<< HEAD
-=======
-        if request.form['b']=="Log Out":
-            session.pop("myuser", None)
-            return redirect(url_for('home'))
+
+        
 
 def getpword(uname):
     names = db.info.find()
@@ -128,7 +128,6 @@ def adduser(uname,pword):
         db.info.insert(d)
         return True
     return False
->>>>>>> bb4b0370706378117ac20f49039e88d87bef92ed
 
 if __name__=="__main__":
     client = MongoClient()
