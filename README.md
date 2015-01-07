@@ -28,17 +28,24 @@ searching, tag system, rating system/user statistics/assigning medals, notificat
  * Have done by Tuesday night, 12/30 
  * DONE!
 * 3. posting capabilities 
- * by 1/6
-* 4. claiming/status
  * by 1/8
+* 4. claiming/status
+ * by 1/9
 * 5. submitting
-* -----we'd like to be here by monday-----
+ * by 1/12
 * 6. tag system
+ * by 1/14
 * 7. point system/medals
+ * by 1/15
 * 8. search by tag (in order)
+ * by 1/19
 * 9. suggesting
+ * by 1/19
 * 10. notifications
+ * 1/22
 * 11. contained editing
+ * 1/26
 * 12. messaging/email notifications
+ * 1/26
 
 
