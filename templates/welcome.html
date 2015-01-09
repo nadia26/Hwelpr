@@ -35,7 +35,7 @@
             <li><a href="/myhw">My HW</a></li>
 	    <li><a href="/myrecs">My Recs</a></li>
 	    <li><a href="/search">Search</a></li>
-	    <p class="navbar-text">Logged in as {{ session['username'] }}</p>
+	    <p class="navbar-text">Logged in as <i> {{ session['myuser'] }} </i></p>
 	    <li><a href="/">LOG OUT</a></li>
           </ul>
         </div>
@@ -43,7 +43,7 @@
     </nav>
 
     <div class="container-fluid" style="max-width:730px;">
-      <h2><p class="text-center">Welcome {{session['username']}}!</p></h2>
+      <h2><p class="text-center">Welcome {{session['myuser']}}!</p></h2>
     </div>
 
   </body>

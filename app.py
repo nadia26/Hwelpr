@@ -43,6 +43,7 @@ def home():
 @app.route("/welcome",methods=["GET","POST"])
 def welcome():
     if request.method=="GET":
+        
         return render_template("welcome.html")
     else:
         if request.form['b']=="Log Out":
