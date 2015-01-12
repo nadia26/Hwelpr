@@ -4,8 +4,8 @@
 
   <head>
 
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for( 'static',filename='css/bootstrap-theme.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for( 'static',filename='css/bootstrap.css') }}">
 
     <style type="text/css">
       body { background: #8cfee2;}
@@ -35,7 +35,7 @@
             <li><a href="/myhw">My HW</a></li>
 	    <li><a href="/myrecs">My Recs</a></li>
 	    <li><a href="/search">Search</a></li>
-	    <p class="navbar-text">Logged in as <i> {{ session['myuser'] }} </i></p>
+	    <p class="navbar-text">Logged in as {{ session['myuser'] }}</p>
 	    <li><a href="/">LOG OUT</a></li>
           </ul>
         </div>
@@ -43,9 +43,12 @@
     </nav>
 
     <div class="container-fluid" style="max-width:730px;">
+      <br>
+      <br>
+      <br>
       <h2><p class="text-center">Welcome {{session['myuser']}}!</p></h2>
     </div>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="{{ url_for( 'static',filename='js/bootstrap.js') }}"></script>
   </body>
 
 </html>
