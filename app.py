@@ -70,6 +70,9 @@ def addhw():
     if request.method=="GET":
         return render_template("addhw.html")
     else:
+        if request.form['b']=="Submit":
+            input = request.form["input"]
+            return render_template("welcome.html",printedhw=input)
         if request.form['b']=="Log Out":
             session.pop("myuser", None)
             return redirect(url_for('home'))
