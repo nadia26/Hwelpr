@@ -1,3 +1,4 @@
+
 from flask import Flask, flash, render_template, request, redirect, url_for, session, escape
 from pymongo import MongoClient
 from functools import wraps
@@ -9,10 +10,10 @@ def authenticate(page):
     def decorate(f):
         @wraps(f)
         def inner(*args):
-            if 'user' not in session:
+            if 'myuser' not in session:
                 flash("You need to be logged in to see that!")
                 session['nextpage'] = page
-                return redirect(url_for("login.html"))
+                return redirect(url_for("login"))
             return f(*args)
         return inner
     return decorate
@@ -21,8 +22,8 @@ def authenticate(page):
 @app.route("/")
 def home():
     if 'user' in session:
-        return redirect(url_for("welcome.html"))
-    return render_template("login.html")
+        return redirect(url_for("welcome"))
+    return redirect(url_for("login"))
 
 @app.route("/login", methods=["GET","POST"])
 def login():
@@ -41,7 +42,9 @@ def login():
                 return render_template("login.html",message="Not a valid user.")
             else:
                 session['myuser']=username
-                return redirect(url_for('welcome'))
+                print "add user to session, redirecting next"
+                print "\n\n\nabout to redirect\n\n\n"
+                return redirect('welcome')
         if request.form['b']=="Sign Up":
             return redirect(url_for('signup'))
 
@@ -61,17 +64,18 @@ def signup():
                 return render_template("signup.html",message="Please fill in required elements. Each required element must have at least 3 characters.")
             elif(password == password2):
                 if adduser(username,password):
-                    return redirect(url_for('login', message="You have registered successfully"))
+                    return redirect(url_for('login'))
                 else:
                     return render_template("signup.html", message="Username taken. Try Again.")
             else:
                 return render_template("signup.html", message="Password doesn't match confirmation.")
-        if request.form['b']=="Cancel":
+         if request.form['b']=="Cancel":
             return redirect(url_for('login'))
 
 @app.route("/welcome",methods=["GET","POST"])
 @authenticate("/welcome")
 def welcome():
+    print "\n\n\nredirected\n\n\n"
     if request.method=="GET":
         return render_template("welcome.html")
     else:
