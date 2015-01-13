@@ -114,6 +114,10 @@ def search():
     if request.method=="GET":
         return render_template("search.html")
     else:
+        if request.form['b']=="Search":
+            query = request.form['query']
+            #searching stuff!!
+            return render_template("search.html",message=query)
         if request.form['b']=="Log Out":
             session.pop("myuser", None)
             return redirect(url_for('home'))
