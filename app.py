@@ -67,12 +67,17 @@ def profile():
 
 @app.route("/addhw", methods=["GET","POST"])
 def addhw():
+    message = ""
     if request.method=="GET":
-        return render_template("addhw.html")
+        return render_template("addhw.html", message=message)
     else:
         if request.form['b']=="Submit":
-            input = request.form["input"]
-            return render_template("welcome.html",printedhw=input)
+            subject = request.form['r']
+            title = request.form['title']
+            description = request.form['description']
+            summary = request.form['summary']
+            content = request.form['content']
+            return render_template("addhw.html", message="Homework successfully posted.")
         if request.form['b']=="Log Out":
             session.pop("myuser", None)
             return redirect(url_for('home'))
@@ -137,6 +142,9 @@ def adduser(uname,pword):
         db.info.insert(d)
         return True
     return False
+
+#def addhomework(subject,title,desc,summary,work):
+    #adding a homework to the database
 
 if __name__=="__main__":
     client = MongoClient()

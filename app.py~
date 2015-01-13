@@ -67,12 +67,13 @@ def profile():
 
 @app.route("/addhw", methods=["GET","POST"])
 def addhw():
+    content=""
     if request.method=="GET":
         return render_template("addhw.html")
     else:
         if request.form['b']=="Submit":
-            input = request.form["input"]
-            return render_template("welcome.html",printedhw=input)
+            content = request.form['content']
+            return render_template("addhw.html",printedhw=content)
         if request.form['b']=="Log Out":
             session.pop("myuser", None)
             return redirect(url_for('home'))

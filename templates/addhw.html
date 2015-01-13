@@ -47,15 +47,45 @@
       <br>
       <br>
       <h2><p class="text-center">Add a Homework</p></h2>
-      {{printedhw}}
-      <textarea name="input"
-		rows="25"
-		cols="80">Enter your homework here!</textarea><br>
-      <br>
-      <input type="submit" name="b" class="btn btn-default" value="Submit">
+      <p class="text-center">{{message}}</p></h2>
+      <form method="POST">
 
-    </div>
-     <script src="{{ url_for( 'static',filename='js/bootstrap.js') }}"></script>
+	<br>
+	<h4>Choose your subject</h4>
+	<div class="radio">
+	  <label>
+	    <input type="radio" name="r" value="english">
+	    English
+	  </label>
+	</div>
+	<div class="radio">
+	  <label>
+	    <input type="radio" name="r" value="history">
+	    History
+	  </label>
+	</div>
+	<div class="radio">
+	  <label>
+	    <input type="radio" name="r" value="math">
+	    History
+	  </label>
+	</div>
+	<div class="radio">
+	  <label>
+	    <input type="radio" name="r" value="science">
+	    Science
+	  </label>
+	</div>
+	<textarea class="form-control" name="title" rows="2">Assignment title</textarea>
+	<textarea class="form-control" name="description" rows="10">Assignment description</textarea>
+	<textarea class="form-control" name="summary" rows="10">Summary of your work</textarea>
+	<textarea class="form-control" name="content" rows="20">Your work</textarea>
+	<br>
+	<input type="submit" name="b" class="btn btn-default" value="Submit">
+	<br>
+	
+      </form>
+      <script src="{{ url_for( 'static',filename='js/bootstrap.js') }}"></script>
   </body>
 
 </html>
