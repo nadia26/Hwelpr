@@ -33,6 +33,8 @@ def login():
     else:
         if request.form['b']=="About":
             return render_template("login.html", message=message)
+        if request.form['b']=="Cancel":
+            return redirect(url_for('login'))
         if request.form['b']=="Log In":
             username = request.form["logusername"]
             password = request.form["logpassword"]
@@ -42,8 +44,6 @@ def login():
                 return render_template("login.html",message="Not a valid user.")
             else:
                 session['myuser']=username
-                print "add user to session, redirecting next"
-                print "\n\n\nabout to redirect\n\n\n"
                 return redirect('welcome')
         if request.form['b']=="Sign Up":
             return redirect(url_for('signup'))
