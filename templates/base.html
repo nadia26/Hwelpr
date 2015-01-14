@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+
+<html lang="en">
+    
+    <head>
+        
+        <link rel="stylesheet" type="text/css" href="{{ url_for( 'static',filename='css/bootstrap-theme.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ url_for( 'static',filename='css/bootstrap.css') }}">
+                
+                <style type="text/css">
+                    body { background: #8cfee2;}
+                    </style>
+                
+                <title>
+                    {% block title %}
+                    {% endblock %}
+                </title>
+                
+                </head>
+    
+    <body>
+        
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/welcome">HWelpr</a>
+                </div>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/profile">Profile</a></li>
+                        <li><a href="/addhw">Add HW</a></li>
+                        <li><a href="/myhw">My HW</a></li>
+                        <li><a href="/myrecs">My Recs</a></li>
+                        <li><a href="/search">Search</a></li>
+                        <p class="navbar-text">Logged in as {{ session['myuser'] }}</p>
+                        <li><a href="/">LOG OUT</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="container-fluid" style="max-width:730px;">
+            <br>
+            <br>
+            <br>
+
+{% block bodycontent %}
+{% endblock %}
+
+        </div>
+        
+        <script src="{{ url_for( 'static',filename='js/bootstrap.js') }}"></script>
+    </body>
+    
+</html>
