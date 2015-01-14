@@ -48,6 +48,12 @@ def login():
         if request.form['b']=="Sign Up":
             return redirect(url_for('signup'))
 
+@app.route("/logout")
+def logout():
+    session.pop("myuser", None)
+    print(session)
+    return redirect(url_for('login'))
+
 @app.route("/signup", methods=["GET","POST"])
 def signup():
     message = ""
@@ -75,16 +81,10 @@ def signup():
 @app.route("/welcome",methods=["GET","POST"])
 @authenticate("/welcome")
 def welcome():
-    print "\n\n\nredirected\n\n\n"
     if request.method=="GET":
         return render_template("welcome.html")
     else:
-        if request.form['b']=="Log Out":
-            session.pop("myuser", None)
-            return redirect(url_for('home'))
-        #there will be other buttons here
-        else:
-            return render_template("welcome.html")
+        return render_template("welcome.html")
 
 @app.route("/profile", methods=["GET","POST"])
 @authenticate("/profile")
@@ -92,12 +92,8 @@ def profile():
     if request.method=="GET":
         return render_template("profile.html")
     else:
-        if request.form['b']=="Log Out":
-            session.pop("myuser", None)
-            return redirect(url_for('home'))
-        else:
-            #there will be other buttons here
-            return render_template("welcome.html")
+        #there will be other buttons here
+        return render_template("welcome.html")
 
 @app.route("/addhw", methods=["GET","POST"])
 @authenticate("/addhw")
@@ -113,10 +109,6 @@ def addhw():
             summary = request.form['summary']
             content = request.form['content']
             return render_template("addhw.html", message="Homework successfully posted.")
-        if request.form['b']=="Log Out":
-            session.pop("myuser", None)
-            return redirect(url_for('home'))
-        #there will be other buttons here
         else:
             return render_template("welcome.html")
 
@@ -126,12 +118,7 @@ def myhw():
     if request.method=="GET":
         return render_template("myhw.html")
     else:
-        if request.form['b']=="Log Out":
-            session.pop("myuser", None)
-            return redirect(url_for('home'))
-        #there will be other buttons here
-        else:
-            return render_template("welcome.html")
+        return render_template("welcome.html")
 
 @app.route("/myrecs", methods=["GET","POST"])
 @authenticate("/myrecs")
@@ -139,12 +126,7 @@ def myrecs():
     if request.method=="GET":
         return render_template("myrecs.html")
     else:
-        if request.form['b']=="Log Out":
-            session.pop("myuser", None)
-            return redirect(url_for('home'))
-        #there will be other buttons here
-        else:
-            return render_template("welcome.html")
+        return render_template("welcome.html")
 
 @app.route("/search", methods=["GET","POST"])
 @authenticate("/search")
@@ -156,10 +138,6 @@ def search():
             query = request.form['query']
             #searching stuff!!
             return render_template("search.html",message=query)
-        if request.form['b']=="Log Out":
-            session.pop("myuser", None)
-            return redirect(url_for('home'))
-        #there will be other buttons here
         else:
             return render_template("welcome.html")
 
