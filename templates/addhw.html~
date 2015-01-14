@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+
+<html lang="en">
+
+  <head>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for( 'static',filename='css/bootstrap-theme.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for( 'static',filename='css/bootstrap.css') }}">
+
+    <style type="text/css">
+      body { background: #8cfee2;}
+    </style>
+
+    <title>Add Homework</title>
+
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/welcome">HWelpr</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/profile">Profile</a></li>
+            <li><a href="/addhw">Add HW</a></li>
+            <li><a href="/myhw">My HW</a></li>
+	    <li><a href="/myrecs">My Recs</a></li>
+	    <li><a href="/search">Search</a></li>
+	    <p class="navbar-text">Logged in as {{session['myuser']}}</p>
+	    <li><a href="/">LOG OUT</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid" style="max-width:730px;">
+      <br>
+      <br>
+      <br>
+      <h2><p class="text-center">Add a Homework</p></h2>
+      <p class="text-center">{{message}}</p></h2>
+      <form method="POST">
+
+	<br>
+	<h4>Choose your subject</h4>
+	<div class="radio">
+	  <label>
+	    <input type="radio" name="r" value="english">
+	    English
+	  </label>
+	</div>
+	<div class="radio">
+	  <label>
+	    <input type="radio" name="r" value="history">
+	    History
+	  </label>
+	</div>
+	<div class="radio">
+	  <label>
+	    <input type="radio" name="r" value="math">
+	    History
+	  </label>
+	</div>
+	<div class="radio">
+	  <label>
+	    <input type="radio" name="r" value="science">
+	    Science
+	  </label>
+	</div>
+	<textarea class="form-control" name="title" rows="2">Assignment title</textarea>
+	<textarea class="form-control" name="description" rows="10">Assignment description</textarea>
+	<textarea class="form-control" name="summary" rows="10">Summary of your work</textarea>
+	<textarea class="form-control" name="content" rows="20">Your work</textarea>
+	<br>
+	<input type="submit" name="b" class="btn btn-default" value="Submit">
+	<br>
+	
+      </form>
+      <script src="{{ url_for( 'static',filename='js/bootstrap.js') }}"></script>
+  </body>
+
+</html>
