@@ -67,7 +67,7 @@
 	<div class="radio">
 	  <label>
 	    <input type="radio" name="r" value="math">
-	    Math
+	    History
 	  </label>
 	</div>
 	<div class="radio">

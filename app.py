@@ -1,7 +1,8 @@
-
+import datetime
 from flask import Flask, flash, render_template, request, redirect, url_for, session, escape
 from pymongo import MongoClient
 from functools import wraps
+
 
 app = Flask(__name__)
 app.secret_key = 'secret'
@@ -112,6 +113,8 @@ def addhw():
             description = request.form['description']
             summary = request.form['summary']
             content = request.form['content']
+            #tags = request.form['tags']
+            addhomework(subject,title,description,summary,content)
             return render_template("addhw.html", message="Homework successfully posted.")
         if request.form['b']=="Log Out":
             session.pop("myuser", None)
@@ -185,12 +188,24 @@ def adduser(uname,pword):
         return True
     return False
 
-#def addhomework(subject,title,desc,summary,work):
-    #adding a homework to the database
+#adds homework to database (WIP):
+def addhomework(subject,title,desc,summary,work):
+    homework = {"subject":subject,
+            "title":title,
+            "description":desc,
+            "summary":summary,
+            "work":work,
+            "date":datetime.datetime.utcnow()}
+    post_id = homeworks.insert(homework)
+    #for testing purposes, prints homeworks in terminal:
+    #for homework in homeworks.find():
+    #    print(homework)
 
 if __name__=="__main__":
     client = MongoClient()
     db = client['1258']
+    #homework collection in database (WIP):
+    homeworks = db['homeworks']
     app.debug=True
     app.run()
         
