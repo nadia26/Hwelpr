@@ -87,7 +87,8 @@ def welcome():
 @app.route("/profile", methods=["GET","POST"])
 @authenticate("/profile")
 def profile():
-    return render_template("profile.html", name = getname(session['myuser']))
+    return render_template("profile.html", name = getname(session['myuser']),
+                                                          username = session['myuser'])
 
 @app.route("/addhw", methods=["GET","POST"])
 @authenticate("/addhw")
