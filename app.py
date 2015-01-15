@@ -70,7 +70,7 @@ def signup():
             if (len(username)<3 or len(password)<3):
                 return render_template("signup.html",message="Please fill in required elements. Each required element must have at least 3 characters.")
             elif(password == password2):
-                if adduser(username,password):
+                if adduser(username,password,name):
                     return redirect(url_for('login'))
                 else:
                     return render_template("signup.html", message="Username taken. Try Again.")
@@ -79,22 +79,15 @@ def signup():
          if request.form['b']=="Cancel":
             return redirect(url_for('login'))
 
-@app.route("/welcome",methods=["GET","POST"])
+@app.route("/welcome")
 @authenticate("/welcome")
 def welcome():
-    if request.method=="GET":
-        return render_template("welcome.html")
-    else:
-        return render_template("welcome.html")
+    return render_template("welcome.html", name=getname(session['myuser']))
 
 @app.route("/profile", methods=["GET","POST"])
 @authenticate("/profile")
 def profile():
-    if request.method=="GET":
-        return render_template("profile.html")
-    else:
-        #there will be other buttons here
-        return render_template("welcome.html")
+    return render_template("profile.html", name = getname(session['myuser']))
 
 @app.route("/addhw", methods=["GET","POST"])
 @authenticate("/addhw")
@@ -145,6 +138,12 @@ def search():
             return render_template("welcome.html")
 
 
+def getname(uname):
+    users = db.info.find()
+    for user in users:
+        if user['user'] == uname:
+            return user['name']
+
 def getpword(uname):
     names = db.info.find()
     for name in names:
@@ -154,14 +153,15 @@ def getpword(uname):
 def authenticate(uname,pword):
     names = db.info.find()
     for name in names:
+        print name
         if name['user'] == uname:
             if name['pass'] == pword:
                 return True
     return False
 
-def adduser(uname,pword):
+def adduser(uname,pword, name):
     if db.info.find_one({'user':uname}) == None:
-        d = {'user':uname,'pass':pword}
+        d = {'user':uname,'pass':pword, 'name':name}
         db.info.insert(d)
         return True
     return False
@@ -173,11 +173,12 @@ def addhomework(subject,title,desc,summary,work):
             "description":desc,
             "summary":summary,
             "work":work,
-            "date":datetime.datetime.utcnow()}
+            "date":datetime.datetime.utcnow(),
+            "poster":session['myuser']}
     post_id = homeworks.insert(homework)
     #for testing purposes, prints homeworks in terminal:
     #for homework in homeworks.find():
-    #    print(homework)
+    #   print(homework)
 
 if __name__=="__main__":
     client = MongoClient()

@@ -29,6 +29,7 @@ searching, tag system, rating system/user statistics/assigning medals, notificat
  * DONE!
 * 3. posting capabilities 
  * by 1/8
+ * DONE!
 * 4. claiming/status
  * by 1/9
 * 5. submitting
