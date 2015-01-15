@@ -112,7 +112,8 @@ def addhw():
 @authenticate("/myhw")
 def myhw():
     if request.method=="GET":
-        return render_template("myhw.html")
+        myhomeworks = homeworks.find_one({"poster":session['myuser']})
+        return render_template("myhw.html", homeworks=myhomeworks)
     else:
         return render_template("welcome.html")
 
