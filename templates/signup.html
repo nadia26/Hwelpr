@@ -10,6 +10,11 @@
     <style type="text/css">
       body { background: #ffffff;}
       .text-center { color: #6b00cf;}
+      .boxed {
+          border: 1px solid red;
+          width: 500px;
+          margin-left: -50px;
+      }
     </style>
 
     <title>HWelpr</title>
@@ -20,7 +25,6 @@
 
      <center> <img src="{{ url_for( 'static',filename='hwelprlogo1.png') }}" alt="HWelper" width=250 height=250></center>
       <h3><p class="text-center">The simple, educational, and classy way to get and give help on homework.</p></h3>
-      <h4><p class="text-center">{{message}}</p></h4>
 
       <div class="container-fluid" style="max-width:400px;">
 	<h4><p class="text-center">Don't have an account?</p></h4>
@@ -31,6 +35,12 @@
             <p class="text-center"><input type="password" class="form-control" name="signpassword" placeholder="Password"></p>
 	    <p class="text-center"><input type="password" class="form-control" name="signpassword2" placeholder="Confirm Password"></p>
 	    <p class="text-center"><input type="text" class="form-control" name="name" placeholder="Name"></p>
+            {% if message %}
+            <div class="boxed">
+                <h4><p class="text-center">{{message}}</p></h4>
+            </div>
+            <br>
+            {% endif %}
             <p class="text-center"><input type="submit" name="b" class="btn btn-default" value="Sign Up">
   	      <input type="submit" name="b" class="btn btn-default" value="Cancel"></p>
           </div>
