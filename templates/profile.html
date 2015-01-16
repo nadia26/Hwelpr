@@ -4,13 +4,27 @@ Profile
 {% endblock %}
 
 {% block bodycontent %}
-      <h2><p class="text-center">{{name}}'s Profile</p></h2>
-      <h4><p class="text-center">Name: <b>{{name}}</b></p></h4>
-      <h4><p class="text-center">Username: <b>{{username}}</b></p></h4>
-      <h4><p class="text-center">Change password</p></h4>
+<h1><p class="text-center">{{name}}'s Profile</p></h1>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6">
       <h4><p class="text-center">Picture</p></h4>
-      <h4><p class="text-center">Bio</p></h4>
-      <h4><p class="text-center">Subject rankings</p></h4>
-      <h4><p class="text-center">Overall rating</p></h4>
-      <h4><p class="text-center">Homeworks reviewed</p></h4>
+      <p class="text-center"><img src="{{ url_for( 'static',filename='testimage.jpg') }}" alt="test image" height="250"></p>
+    </div>
+    <div class="col-md-6">
+      <h2><p class="text-center">Name: <b>{{name}}</b></p></h2>
+      <h2><p class="text-center">Username: <b>{{username}}</b></p></h2>
+      <h2><p class="text-center">Change password</p></h2>
+    </div>
+  </div>
+</div>
+<h4><p class="text-center">Bio</p></h4>
+<h4><p class="text-center">Subject rankings</p></h4>
+<h4><p class="text-center">Overall rating</p></h4>
+<h4><p class="text-center">Homeworks reviewed</p></h4>
 {% endblock %}
+
+<div class="row">
+  <div class="col-md-8">.col-md-8</div>
+  <div class="col-md-4">.col-md-4</div>
+</div>
