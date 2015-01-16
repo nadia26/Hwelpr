@@ -5,5 +5,19 @@ My Homework
 
 {% block bodycontent %}
 <h2><p class="text-center">My Homework</p></h2>
-{{homeworks}}
+
+
+{% for homework in homeworks %}
+
+Title: {{homework['title']}} <br>
+Subject: {{homework['subject']}} <br>
+Date: {{homework['date']}}<br>
+Description: {{homework['description']}}<br>
+Summary: {{homework['summary']}}<br>
+Work:{{homework['work']}}<br>
+<br>
+
+{% endfor %}
+
+
 {% endblock %}
