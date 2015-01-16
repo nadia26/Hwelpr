@@ -49,6 +49,10 @@ def login():
         if request.form['b']=="Sign Up":
             return redirect(url_for('signup'))
 
+@app.route("/todo")
+def todo():
+    return render_template("todo.html")
+
 @app.route("/logout")
 def logout():
     session.pop("myuser", None)
