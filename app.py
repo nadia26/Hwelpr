@@ -56,7 +56,7 @@ def todo():
 @app.route("/logout")
 def logout():
     session.pop("myuser", None)
-    print(session)
+    #print(session)
     return redirect(url_for('login'))
 
 @app.route("/signup", methods=["GET","POST"])
@@ -104,6 +104,7 @@ def addhw():
         if request.form['b']=="Submit":
             subject = request.form['r']
             title = request.form['title']
+            print(title);
             description = request.form['description']
             summary = request.form['summary']
             content = request.form['content']
@@ -113,22 +114,17 @@ def addhw():
         else:
             return render_template("welcome.html")
 
-@app.route("/myhw", methods=["GET","POST"])
+@app.route("/myhw")
 @authenticate("/myhw")
 def myhw():
-    if request.method=="GET":
-        myhomeworks = homeworks.find({"poster":session['myuser']})
-        return render_template("myhw.html", homeworks=myhomeworks)
-    else:
-        return render_template("welcome.html")
+    myhomeworks = homeworks.find({"poster":session['myuser']})
+    return render_template("myhw.html", homeworks=myhomeworks)
 
-@app.route("/myrecs", methods=["GET","POST"])
+@app.route("/myrecs")
 @authenticate("/myrecs")
 def myrecs():
-    if request.method=="GET":
-        return render_template("myrecs.html")
-    else:
-        return render_template("welcome.html")
+    return render_template("myrecs.html",homeworks = homeworks.find(), user=session['myuser'])
+
 
 @app.route("/search", methods=["GET","POST"])
 @authenticate("/search")
@@ -159,7 +155,7 @@ def getpword(uname):
 def authenticate(uname,pword):
     names = db.info.find()
     for name in names:
-        print name
+        #print name
         if name['user'] == uname:
             if name['pass'] == pword:
                 return True

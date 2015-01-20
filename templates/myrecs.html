@@ -5,4 +5,33 @@ My Recommendations
 
 {% block bodycontent %}
 <h2><p class="text-center">My Recomendations</p></h2>
+
+
+{% for homework in homeworks %}
+
+{% if homework['poster'] != user %}
+
+
+<div class="col-md-5">
+    <input type="submit" name="b" class="btn btn-default" value="Claim">
+        <br>
+</div>
+
+<div class="col-md-7">
+    
+    Title: {{homework['title']}} <br>
+    Subject: {{homework['subject']}} <br>
+    Date: {{homework['date']}} <br>
+    Description: {{homework['description']}}<br>
+    Summary: {{homework['summary']}}<br>
+    Work:{{homework['work']}}<br>
+    Poster: {{homework['poster']}}<br>
+   <br>
+   
+</div>
+
+{% endif %}
+
+{% endfor %}
+
 {% endblock %}
