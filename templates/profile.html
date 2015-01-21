@@ -8,20 +8,22 @@ Profile
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-6">
-      <h4><p class="text-center">Picture</p></h4>
-      <p class="text-center"><img src="{{ url_for( 'static',filename='testimage.jpg') }}" alt="test image" height="250"></p>
+      <p class="text-right"><img src="{{ url_for( 'static',filename='testimage.jpg') }}" alt="test image" height="170" width="170" class="img-rounded"></p>
+      <p class="text-right">
+	<input type="submit" name="b" class="btn btn-default" value="Edit profile">
+      </p>
     </div>
     <div class="col-md-6">
-      <h2><p class="text-center">Name: <b>{{name}}</b></p></h2>
-      <h2><p class="text-center">Username: <b>{{username}}</b></p></h2>
-      <h2><p class="text-center">Change password</p></h2>
+      <h2><p class="text-left">Name: <b>{{name}}</b></p></h2>
+      <h2><p class="text-left">Username: <b>{{username}}</b></p></h2>
+      <h3><p class="text-left">Bio:</p></h3>
+      <h3><p class="text-left">Subject rankings:</p></h3>
+      <h3><p class="text-left">Overall rating:</p></h3>
+      <h3><p class="text-left">Homeworks reviewed:</p></h3>
     </div>
   </div>
 </div>
-<h4><p class="text-center">Bio</p></h4>
-<h4><p class="text-center">Subject rankings</p></h4>
-<h4><p class="text-center">Overall rating</p></h4>
-<h4><p class="text-center">Homeworks reviewed</p></h4>
+
 {% endblock %}
 
 <div class="row">

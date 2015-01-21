@@ -1,35 +1,35 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 
 <html lang="en">
+  
+  <head>
     
-    <head>
-        
-        <link rel="stylesheet" type="text/css" href="{{ url_for( 'static',filename='css/bootstrap-theme.css') }}">
-            <link rel="stylesheet" type="text/css" href="{{ url_for( 'static',filename='css/bootstrap.css') }}">
-                
-                <style type="text/css">
-                    body { background: #8cfee2;}
-                    </style>
-                
-                <title>
-                    {% block title %}
-                    {% endblock %}
-                </title>
-                
-                </head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for( 'static',filename='css/bootstrap-theme.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for( 'static',filename='css/bootstrap.css') }}">
     
-    <body>
-        
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="/welcome">HWelpr</a>
+    <style type="text/css">
+      body { background: #8cfee2;}
+    </style>
+    
+    <title>
+      {% block title %}
+      {% endblock %}
+    </title>
+    
+  </head>
+  
+  <body>
+    
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/welcome">HWelpr</a>
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">

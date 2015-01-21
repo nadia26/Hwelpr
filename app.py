@@ -87,8 +87,22 @@ def welcome():
 @app.route("/profile", methods=["GET","POST"])
 @authenticate("/profile")
 def profile():
-    return render_template("profile.html", name = getname(session['myuser']),
-                                                          username = session['myuser'])
+    if request.method=="GET":
+        return render_template("profile.html", name = getname(session['myuser']),
+                               username = session['myuser'])
+    else:
+        if request.form['b']=="Edit profile":
+            return redirect(url_for('editprofile'))
+
+@app.route("/editprofile", methods=["GET","POST"])
+@authenticate("/editprofile")
+def editprofile():
+    if request.method=="GET":
+        return render_template("editprofile.html", name = getname(session['myuser']),
+                               username = session['myuser'])
+    else:
+        if request.form['b']=="Update":
+            #update stuff
 
 @app.route("/addhw", methods=["GET","POST"])
 @authenticate("/addhw")
