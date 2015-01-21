@@ -102,8 +102,8 @@ def addhw():
             description = request.form['description']
             summary = request.form['summary']
             content = request.form['content']
-            #tags = request.form['tags']
-            addhomework(subject,title,description,summary,content)
+            tags = request.form['tags']
+            addhomework(subject,title,description,summary,content,tags)
             return render_template("addhw.html", message="Homework successfully posted.")
         else:
             return render_template("welcome.html")
@@ -133,8 +133,9 @@ def search():
     else:
         if request.form['b']=="Search":
             query = request.form['query']
-            #searching stuff!!
-            return render_template("search.html",message=query)
+            num_results = searchtags(query)[0]
+            results = searchtags(query)[1]
+            return render_template("search.html",message=str(num_results)+" result(s) found",results=results)
         else:
             return render_template("welcome.html")
 
@@ -160,31 +161,43 @@ def authenticate(uname,pword):
                 return True
     return False
 
-def adduser(uname,pword, name):
+def adduser(uname,pword,name):
     if db.info.find_one({'user':uname}) == None:
         d = {'user':uname,'pass':pword, 'name':name}
         db.info.insert(d)
         return True
     return False
 
-#adds homework to database (WIP):
-def addhomework(subject,title,desc,summary,work):
+#adds homework to database
+def addhomework(subject,title,desc,summary,work,tags):
     homework = {"subject":subject,
-            "title":title,
-            "description":desc,
-            "summary":summary,
-            "work":work,
-            "date":datetime.datetime.utcnow(),
-            "poster":session['myuser']}
+                "title":title,
+                "description":desc,
+                "summary":summary,
+                "work":work,
+                "date":datetime.datetime.utcnow(),
+                "poster":session['myuser'],
+                "tags_string":tags.lower(),
+                "tags_array":tags.lower().split(" ")
+                
+}
     post_id = homeworks.insert(homework)
     #for testing purposes, prints homeworks in terminal:
     #for homework in homeworks.find():
     #   print(homework)
 
+def searchtags(query):
+    #loops through each homework in database looking for tag in common with query
+    num_results = 0
+    results = []
+    for homework in homeworks.find({"tags_array": query}):
+        num_results+=1
+        results.append(homework)
+    return (num_results, results)
+
 if __name__=="__main__":
     client = MongoClient()
     db = client['1258']
-    #homework collection in database (WIP):
     homeworks = db['homeworks']
     app.debug=True
     app.run()
