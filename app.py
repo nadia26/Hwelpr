@@ -120,10 +120,11 @@ def myhw():
     myhomeworks = homeworks.find({"poster":session['myuser']})
     return render_template("myhw.html", homeworks=myhomeworks)
 
-@app.route("/myrecs")
+@app.route("/myrecs", methods=["GET", "POST"])
 @authenticate("/myrecs")
 def myrecs():
-    return render_template("myrecs.html",homeworks = homeworks.find(), user=session['myuser'])
+    if request.method=="GET":
+        return render_template("myrecs.html",homeworks = homeworks.find(), user=session['myuser'])
 
 
 @app.route("/search", methods=["GET","POST"])
