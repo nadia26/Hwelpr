@@ -138,6 +138,8 @@ def search():
     else:
         if request.form['b']=="Search":
             query = request.form['query']
+            #if request.form['english']=="english":
+            #    print "hi"
             num_results = searchtags(query)[0]
             results = searchtags(query)[1]
             return render_template("search.html",message=str(num_results)+" result(s) found",results=results)
