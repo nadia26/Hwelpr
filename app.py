@@ -125,6 +125,20 @@ def myhw():
 def myrecs():
     if request.method=="GET":
         return render_template("myrecs.html",homeworks = homeworks.find(), user=session['myuser'])
+    else:
+        if request.form['b'] == "View":
+            print "\n\n\n"
+            print request.form['id']
+            print "\n\n\n"
+            return render_template("viewhw.html", idnum = request.form['id'])
+    return render_template("myrecs.html")
+
+@app.route("/viewhw")
+@authenticate("/viewhw")
+def viewhw():
+    idnum = ""
+    return render_template("viewhw.html", idnum=idnum)
+
 
 
 @app.route("/search", methods=["GET","POST"])

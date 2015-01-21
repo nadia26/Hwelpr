@@ -11,11 +11,13 @@ My Recommendations
 
 {% if homework['poster'] != user %}
 
-
-<div class="col-md-2">
-    <input type="submit" name="b" id={{homework['_id']}} class="btn btn-default" value="View">
-    <br>
-</div>
+<form role="form" class="form-horizontal" method="POST">
+    
+    <div class="col-md-2">
+        <input type="submit" name="b" id={{homework['_id']}} class="btn btn-default" value="View">
+        <br>
+    </div>
+</form>
 
 <div class="col-md-10">
     
