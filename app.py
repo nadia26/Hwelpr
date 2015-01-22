@@ -137,7 +137,8 @@ def search():
             query = request.form['query']
             num_results = searchtags(query)[0]
             results = searchtags(query)[1]
-            return render_template("search.html",message=str(num_results)+" result(s) found",results=results)
+            subject = request.form['x']
+            return render_template("search.html",message=str(num_results)+" result(s) found",results=results,subject=subject)
         else:
             return render_template("welcome.html")
 
