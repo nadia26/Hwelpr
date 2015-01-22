@@ -12,16 +12,16 @@ Search
   <center>
     <div class="btn-group" role="group" aria-label="...">
       <div class="btn-group" role="group">
-	<button type="button" class="btn btn-default" aria-expanded="false">English</button>
+	<input type="submit" name="x" class="btn btn-default" aria-expanded="false" value="English">
       </div>
       <div class="btn-group" role="group">
-	<button type="button" class="btn btn-default" aria-expanded="false">History</button>
+	<input type="submit" name="x" class="btn btn-default" aria-expanded="false" value="History">
       </div>
       <div class="btn-group" role="group">
-	<button type="button" class="btn btn-default" aria-expanded="false">Math</button>
+	<input type="submit" name="x" class="btn btn-default" aria-expanded="false" value="Math">
       </div>
       <div class="btn-group" role="group">
-	<button type="button" class="btn btn-default" aria-expanded="false">Science</button>
+	<input type="submit" name="x" class="btn btn-default" aria-expanded="false" value="Science">
       </div>
     </div>
   </center>
@@ -30,14 +30,33 @@ Search
   <p class="text-center"><input type="text" class="form-control" name="query" placeholder="What are you looking for?"></p>
   <p class="text-center"><input type="submit" name="b" class="btn btn-default" value="Search"></p>
   <br>
-  {% for result in results %}
-  Title: {{result['title']}} <br>
-  Subject: {{result['subject']}} <br>
-  Date: {{result['date']}}<br>
-  Description: {{result['description']}}<br>
-  Summary: {{result['summary']}}<br>
-  Work: {{result['work']}}<br>
-  Tags: {{result['tags_string']}}<br><br>
-  {%endfor%}
+  <div class="panel panel-default">
+    <div class="container-fluid">
+      {% for result in results %}
+      {% if subject == {{result['subject']}} %}
+      <div class="row-fluid">
+	<div class="panel panel-info">
+	  <div class="panel-heading">
+	    <h3 class="panel-title">{{result['title']}}</h3>
+	  </div>
+	  <div class="panel-body">
+	    <div class="col-md-2">
+	      <br>
+	      <input type="submit" name="b" id={{result['_id']}} class="btn btn-default" value="View">
+	      <br>
+	    </div>
+	    <div class="col-md-10">
+	      Date: {{result['date']}}<br>
+	      Description: {{result['description']}}<br>
+	      Summary: {{result['summary']}}<br>
+	      Work: {{result['work']}}<br>
+	      Tags: {{result['tags_string']}}<br><br>
+	    </div>
+	  </div>
+	</div>
+      </div>    
+      {% endfor %}
+    </div>
+  </div>
 </form>
 {% endblock %}

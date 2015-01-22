@@ -6,33 +6,38 @@ My Recommendations
 {% block bodycontent %}
 <h2><p class="text-center">My Recomendations</p></h2>
 <br>
-<div class="container-fluid">
-  {% for homework in homeworks %}
-  {% if homework['poster'] != user %}
-  <div class="row-fluid">
-    <div class="span12">
-      <div class="col-md-2">
-	<input type="submit" name="b" id={{homework['_id']}} class="btn btn-default" value="View">
-	<br>
-      </div>
-      <div class="col-md-10">
-	
-	Title: {{homework['title']}} <br>
-	Subject: {{homework['subject']}} <br>
-	Date: {{homework['date']}} <br>
-	Description: {{homework['description']}}<br>
-	<!--
-	    Summary: {{homework['summary']}}<br>
-	    Work:{{homework['work']}}<br>
-	    Poster: {{homework['poster']}}<br>
-	  -->
-	<br>
-	
+<div class="panel panel-default">
+  <br>
+  <div class="container-fluid">
+    {% for homework in homeworks %}
+    {% if homework['poster'] != user %}
+    <div class="row-fluid">
+      <div class="panel panel-info">
+	<div class="panel-heading">
+	  <h3 class="panel-title">{{homework['title']}}</h3>
+	</div>
+	<div class="panel-body">
+	  <div class="col-md-2">
+	    <br>
+	    <input type="submit" name="b" id={{homework['_id']}} class="btn btn-default" value="View">
+	    <br>
+	  </div>
+	  <div class="col-md-10">
+	    Subject: {{homework['subject']}} <br>
+	    Date: {{homework['date']}} <br>
+	    Description: {{homework['description']}}<br>
+	    <!--
+		Summary: {{homework['summary']}}<br>
+		Work:{{homework['work']}}<br>
+		Poster: {{homework['poster']}}<br>
+	      -->
+	    <br>
+	  </div>
+	</div>
+	{% endif %}
       </div>
     </div>
+    {% endfor %}
   </div>
-
-  {% endif %}
-  {% endfor %}
 </div>
 {% endblock %}
