@@ -130,6 +130,7 @@ def myrecs():
 @app.route("/search", methods=["GET","POST"])
 @authenticate("/search")
 def search():
+    message=""
     if request.method=="GET":
         return render_template("search.html")
     else:
@@ -137,8 +138,16 @@ def search():
             query = request.form['query']
             num_results = searchtags(query)[0]
             results = searchtags(query)[1]
-            subject = request.form['x']
-            return render_template("search.html",message=str(num_results)+" result(s) found",results=results,subject=subject)
+            if query = "":
+                 return render_template("search.html",message="not a valid search",results=results)
+            return render_template("search.html",message=str(num_results)+" result(s) found",results=results)
+        if request.form['b']=="english":
+            query = request.form['query']
+            num_results = searchtags(query)[0]
+            results = searchtags(query)[1]
+            if query = "":
+                 return render_template("search.html",message="not a valid search",results=results)
+            return render_template("search.html",message=str(num_results)+" result(s) found",results=results)
         else:
             return render_template("welcome.html")
 
