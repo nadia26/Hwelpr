@@ -130,13 +130,15 @@ def myrecs():
 @app.route("/search", methods=["GET","POST"])
 @authenticate("/search")
 def search():
-    subject = request.args.get('subject')
+    #subject = request.args.get('subject')
+    #print subject
     if request.method=="GET":
         return render_template("search.html")
     else:
+        if request.form['subject']=="English":
+            print "English"
         if request.form['b']=="Search":
             query = request.form['query']
-            print subject
             num_results = searchtags(query)[0]
             results = searchtags(query)[1]
             return render_template("search.html",message=str(num_results)+" result(s) found",results=results)
