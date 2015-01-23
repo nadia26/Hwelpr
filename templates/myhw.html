@@ -15,7 +15,25 @@ Date: {{homework['date']}}<br>
 Description: {{homework['description']}}<br>
 Summary: {{homework['summary']}}<br>
 Work:{{homework['work']}}<br>
+
+
+{% if homework['status'] == "complete" %}
+
+Completed by: {{homework['assignedTo']}}
+
+{% elif not homework['assignedTo'] %}
+
+Status: incomplete
+
+{% else %}
+
+Claimed by: {{homework['assignedTo']}}
 <br>
+<br>
+{% endif  %}
+
+
+
 
 {% endfor %}
 

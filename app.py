@@ -2,10 +2,12 @@ import datetime
 from flask import Flask, flash, render_template, request, redirect, url_for, session, escape
 from pymongo import MongoClient
 from functools import wraps
+from bson.objectid import ObjectId
 
 
 app = Flask(__name__)
 app.secret_key = 'secret'
+
 
 def authenticate(page):
     def decorate(f):
@@ -65,7 +67,7 @@ def signup():
     if request.method=="GET":
         return render_template("signup.html", message=message)
     else:
-         if request.form['b']=="Sign Up":
+        if request.form['b']=="Sign Up":
             username = request.form["signusername"]
             password = request.form["signpassword"]
             password2 = request.form["signpassword2"]
@@ -80,8 +82,8 @@ def signup():
                     return render_template("signup.html", message="Username taken. Try Again.")
             else:
                 return render_template("signup.html", message="Password doesn't match confirmation.")
-         if request.form['b']=="Cancel":
-            return redirect(url_for('login'))
+            if request.form['b']=="Cancel":
+                return redirect(url_for('login'))
 
 @app.route("/welcome")
 @authenticate("/welcome")
@@ -92,7 +94,7 @@ def welcome():
 @authenticate("/profile")
 def profile():
     return render_template("profile.html", name = getname(session['myuser']),
-                                                          username = session['myuser'])
+                           username = session['myuser'])
 
 @app.route("/addhw", methods=["GET","POST"])
 @authenticate("/addhw")
@@ -120,24 +122,16 @@ def myhw():
     myhomeworks = homeworks.find({"poster":session['myuser']})
     return render_template("myhw.html", homeworks=myhomeworks)
 
-@app.route("/myrecs", methods=["GET", "POST"])
+@app.route("/myrecs")
 @authenticate("/myrecs")
 def myrecs():
-    if request.method=="GET":
-        return render_template("myrecs.html",homeworks = homeworks.find(), user=session['myuser'])
-    else:
-        if request.form['b'] == "View":
-            print "\n\n\n"
-            print request.form['id']
-            print "\n\n\n"
-            return render_template("viewhw.html", idnum = request.form['id'])
-    return render_template("myrecs.html")
+    return render_template("myrecs.html",homeworks = homeworks.find(), user=session['myuser'])
 
-@app.route("/viewhw")
-@authenticate("/viewhw")
-def viewhw():
-    idnum = ""
-    return render_template("viewhw.html", idnum=idnum)
+@app.route("/viewhw/<idnum>")
+#@authenticate("/viewhw/<idnum>")
+def viewhw(idnum):
+    thishomework = homeworks.find_one({"_id":ObjectId(idnum)})
+    return render_template("viewhw.html", thishomework = thishomework)
 
 
 
@@ -186,16 +180,18 @@ def adduser(uname,pword, name):
 #adds homework to database (WIP):
 def addhomework(subject,title,desc,summary,work):
     homework = {"subject":subject,
-            "title":title,
+        "title":title,
             "description":desc,
             "summary":summary,
             "work":work,
             "date":datetime.datetime.utcnow(),
-            "poster":session['myuser']}
+            "poster":session['myuser'],
+            "status": "incomplete",
+            "assignedTo": None}
     post_id = homeworks.insert(homework)
-    #for testing purposes, prints homeworks in terminal:
-    #for homework in homeworks.find():
-    #   print(homework)
+#for testing purposes, prints homeworks in terminal:
+#for homework in homeworks.find():
+#   print(homework)
 
 if __name__=="__main__":
     client = MongoClient()
@@ -204,4 +200,4 @@ if __name__=="__main__":
     homeworks = db['homeworks']
     app.debug=True
     app.run()
-        
+

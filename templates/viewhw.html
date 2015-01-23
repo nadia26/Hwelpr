@@ -4,4 +4,17 @@
 {% endblock %}
 
 {% block bodycontent %}
+<h2><p class="text-center">{{thishomework['title']}}</p></h2>
+
+
+<br><br>
+Title: {{thishomework['title']}}<br><br>
+
+Posted by: {{thishomework['poster']}}<br>
+Posted on: {{thishomework['date']}}<br><br>
+
+Assignment: {{thishomework['description']}}<br>
+Their Summary: {{thishomework['summary']}}<br>
+Their Work: {{thishomework['work']}}<br>
+
 {% endblock %}
