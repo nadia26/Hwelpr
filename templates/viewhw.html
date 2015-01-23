@@ -14,7 +14,20 @@ Posted by: {{thishomework['poster']}}<br>
 Posted on: {{thishomework['date']}}<br><br>
 
 Assignment: {{thishomework['description']}}<br>
-Their Summary: {{thishomework['summary']}}<br>
-Their Work: {{thishomework['work']}}<br>
+Summary: {{thishomework['summary']}}<br>
+Initial Work: {{thishomework['work']}}<br>
+
+{% if thishomework['status'] == "complete" %}
+
+Help: {{thishomework['help']}}<br>
+Credit to: {{thishomework['assignedto']}}<br>
+
+{% elif thishomework['poster'] != user %}
+<br>
+<form role="form" class="form" method="POST">
+    <input type="submit" name="b" class="btn btn-default" value="Claim">
+</form>
+
+{% endif %}
 
 {% endblock %}

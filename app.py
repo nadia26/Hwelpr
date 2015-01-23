@@ -127,11 +127,14 @@ def myhw():
 def myrecs():
     return render_template("myrecs.html",homeworks = homeworks.find(), user=session['myuser'])
 
-@app.route("/viewhw/<idnum>")
+@app.route("/viewhw/<idnum>", methods=["GET", "POST"])
 #@authenticate("/viewhw/<idnum>")
 def viewhw(idnum):
     thishomework = homeworks.find_one({"_id":ObjectId(idnum)})
-    return render_template("viewhw.html", thishomework = thishomework)
+    if request.method=="GET":
+        return render_template("viewhw.html", thishomework = thishomework, user = session['myuser'])
+    elif request.form['b']=="Claim":
+        return redirect(url_for("todo"))
 
 
 
@@ -187,7 +190,8 @@ def addhomework(subject,title,desc,summary,work):
             "date":datetime.datetime.utcnow(),
             "poster":session['myuser'],
             "status": "incomplete",
-            "assignedTo": None}
+            "assignedTo": None,
+            "help": None}
     post_id = homeworks.insert(homework)
 #for testing purposes, prints homeworks in terminal:
 #for homework in homeworks.find():

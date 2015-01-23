@@ -9,6 +9,14 @@ My Homework
 
 {% for homework in homeworks %}
 
+<div class="col-md-2">
+    <a href="/viewhw/{{homework['_id']}}"><button class="btn btn-default">View</button></a>
+    <br>
+</div>
+
+
+<div class="col-md-10">
+
 Title: {{homework['title']}} <br>
 Subject: {{homework['subject']}} <br>
 Date: {{homework['date']}}<br>
