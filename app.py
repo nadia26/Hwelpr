@@ -51,10 +51,6 @@ def login():
         if request.form['b']=="Sign Up":
             return redirect(url_for('signup'))
 
-@app.route("/todo")
-def todo():
-    return render_template("todo.html", homeworks = homeworks.find({"assignedTo": session['myuser']}))
-
 @app.route("/logout")
 def logout():
     session.pop("myuser", None)
@@ -88,20 +84,24 @@ def signup():
 @app.route("/welcome")
 @authenticate("/welcome")
 def welcome():
-    return render_template("welcome.html", name=getname(session['myuser']))
+    return render_template("welcome.html", name=getname(session['myuser']), TDnum = getTDnum(), MYHWnum = getMYHWnum())
+
+@app.route("/todo")
+def todo():
+    return render_template("todo.html", homeworks = homeworks.find({"assignedTo": session['myuser'], "status": "in progress"}), TDnum = getTDnum(), MYHWnum = getMYHWnum() )
 
 @app.route("/profile", methods=["GET","POST"])
 @authenticate("/profile")
 def profile():
     return render_template("profile.html", name = getname(session['myuser']),
-                           username = session['myuser'])
+                           username = session['myuser'], TDnum = getTDnum(), MYHWnum = getMYHWnum())
 
 @app.route("/addhw", methods=["GET","POST"])
 @authenticate("/addhw")
 def addhw():
     message = ""
     if request.method=="GET":
-        return render_template("addhw.html", message=message)
+        return render_template("addhw.html", message=message, TDnum = getTDnum(), MYHWnum = getMYHWnum())
     else:
         if request.form['b']=="Submit":
             subject = request.form['r']
@@ -111,27 +111,32 @@ def addhw():
             due = request.form['due']
             #tags = request.form['tags']
             addhomework(subject,title,description,content,due)
-            return render_template("addhw.html", message="Homework successfully posted.")
+            return render_template("addhw.html", message="Homework successfully posted.", TDnum = getTDnum(), MYHWnum = getMYHWnum())
         else:
-            return render_template("welcome.html")
+            return render_template("welcome.html", TDnum = getTDnum(), MYHWnum = getMYHWnum())
 
 @app.route("/myhw")
 @authenticate("/myhw")
 def myhw():
-    myhomeworks = homeworks.find({"poster":session['myuser']})
-    return render_template("myhw.html", homeworks=myhomeworks)
+    return render_template("myhw.html",
+                           incomplete = homeworks.find({"poster":session['myuser'] , "status": "incomplete"}),
+                           inprogress = homeworks.find({"poster":session['myuser'] , "status":"in progress"}),
+                           completed  = homeworks.find({"poster":session['myuser']  , "status": "complete"}),
+                           TDnum = getTDnum(),
+                           MYHWnum = getMYHWnum(),
+                           )
 
 @app.route("/myrecs")
 @authenticate("/myrecs")
 def myrecs():
-    return render_template("myrecs.html",homeworks = homeworks.find(), user=session['myuser'])
+    return render_template("myrecs.html",homeworks = homeworks.find(), user=session['myuser'], TDnum = getTDnum(), MYHWnum = getMYHWnum())
 
 @app.route("/viewhw/<idnum>", methods=["GET", "POST"])
 #@authenticate("/viewhw/<idnum>")
 def viewhw(idnum):
     homework = homeworks.find_one({"_id":ObjectId(idnum)})
     if request.method=="GET":
-        return render_template("viewhw.html", homework = homework, user = session['myuser'])
+        return render_template("viewhw.html", homework = homework, user = session['myuser'], TDnum = getTDnum(), MYHWnum = getMYHWnum())
     elif request.form['b']=="Claim":
         homework['status'] = "in progress"
         homework['assignedTo'] = session['myuser']
@@ -149,14 +154,14 @@ def viewhw(idnum):
 @authenticate("/search")
 def search():
     if request.method=="GET":
-        return render_template("search.html")
+        return render_template("search.html", TDnum = getTDnum(), MYHWnum = getMYHWnum())
     else:
         if request.form['b']=="Search":
             query = request.form['query']
             #searching stuff!!
-            return render_template("search.html",message=query)
+            return render_template("search.html",message=query, TDnum = getTDnum(), MYHWnum = getMYHWnum())
         else:
-            return render_template("welcome.html")
+            return render_template("welcome.html", TDnum = getTDnum(), MYHWnum = getMYHWnum() )
 
 
 def getname(uname):
@@ -204,6 +209,13 @@ def addhomework(subject,title,desc,work,due):
 #for homework in homeworks.find():
 #   print(homework)
 
+def getTDnum():
+    return homeworks.find({"assignedTo":session['myuser'], "status": "in progress"}).count()
+
+def getMYHWnum():
+    return homeworks.find( {"poster": session['myuser'],  "status" : { "$in": ["in progress", "incomplete"] } } ).count()
+
+
 if __name__=="__main__":
     client = MongoClient()
     db = client['1258']
@@ -211,4 +223,5 @@ if __name__=="__main__":
     homeworks = db['homeworks']
     app.debug=True
     app.run()
+
 
