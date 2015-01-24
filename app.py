@@ -93,8 +93,13 @@ def todo():
 @app.route("/profile", methods=["GET","POST"])
 @authenticate("/profile")
 def profile():
-    return render_template("profile.html", name = getname(session['myuser']),
-                           username = session['myuser'], TDnum = getTDnum(), MYHWnum = getMYHWnum())
+    user = db.info.find_one({'user':session['myuser']})
+    return render_template("profile.html",
+                           name = getname(session['myuser']),
+                           username = session['myuser'],
+                           TDnum = getTDnum(),
+                           MYHWnum = getMYHWnum(),
+                           points = user['points'])
 
 @app.route("/addhw", methods=["GET","POST"])
 @authenticate("/addhw")
@@ -146,6 +151,9 @@ def viewhw(idnum):
         homework['help'] = request.form['help']
         homework['status'] = "complete"
         homeworks.save(homework)
+        user = db.info.find_one({'user':session['myuser']})
+        user['points'] = user['points'] + 1
+        db.info.save(user)
         return redirect(url_for("todo"))
 
 
@@ -187,7 +195,7 @@ def authenticate(uname,pword):
 
 def adduser(uname,pword, name):
     if db.info.find_one({'user':uname}) == None:
-        d = {'user':uname,'pass':pword, 'name':name}
+        d = {'user':uname,'pass':pword, 'name':name, 'points': 0}
         db.info.insert(d)
         return True
     return False
