@@ -17,32 +17,13 @@ My Homework
 
 <div class="col-md-10">
 
+<!-- always show this stuff -->
 Title: {{homework['title']}} <br>
 Subject: {{homework['subject']}} <br>
-Date: {{homework['date']}}<br>
-Description: {{homework['description']}}<br>
-Summary: {{homework['summary']}}<br>
-Work:{{homework['work']}}<br>
-
-
-{% if homework['status'] == "complete" %}
-
-Completed by: {{homework['assignedTo']}}
-
-{% elif not homework['assignedTo'] %}
-
-Status: incomplete
-
-{% else %}
-
-Claimed by: {{homework['assignedTo']}}
+Posted: {{homework['date']}}<br>
+Due: {{homework['due']}}<br>
+Assignment: {{homework['description']}}<br>
 <br>
-<br>
-{% endif  %}
-
-
-
-
 {% endfor %}
 
 

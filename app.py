@@ -53,7 +53,7 @@ def login():
 
 @app.route("/todo")
 def todo():
-    return render_template("todo.html")
+    return render_template("todo.html", homeworks = homeworks.find({"assignedTo": session['myuser']}))
 
 @app.route("/logout")
 def logout():
@@ -106,12 +106,11 @@ def addhw():
         if request.form['b']=="Submit":
             subject = request.form['r']
             title = request.form['title']
-            print(title);
             description = request.form['description']
-            summary = request.form['summary']
             content = request.form['content']
+            due = request.form['due']
             #tags = request.form['tags']
-            addhomework(subject,title,description,summary,content)
+            addhomework(subject,title,description,content,due)
             return render_template("addhw.html", message="Homework successfully posted.")
         else:
             return render_template("welcome.html")
@@ -130,10 +129,18 @@ def myrecs():
 @app.route("/viewhw/<idnum>", methods=["GET", "POST"])
 #@authenticate("/viewhw/<idnum>")
 def viewhw(idnum):
-    thishomework = homeworks.find_one({"_id":ObjectId(idnum)})
+    homework = homeworks.find_one({"_id":ObjectId(idnum)})
     if request.method=="GET":
-        return render_template("viewhw.html", thishomework = thishomework, user = session['myuser'])
+        return render_template("viewhw.html", homework = homework, user = session['myuser'])
     elif request.form['b']=="Claim":
+        homework['status'] = "in progress"
+        homework['assignedTo'] = session['myuser']
+        homeworks.save(homework)
+        return redirect(url_for("todo"))
+    elif request.form['b'] == "Submit":
+        homework['help'] = request.form['help']
+        homework['status'] = "complete"
+        homeworks.save(homework)
         return redirect(url_for("todo"))
 
 
@@ -181,13 +188,13 @@ def adduser(uname,pword, name):
     return False
 
 #adds homework to database (WIP):
-def addhomework(subject,title,desc,summary,work):
+def addhomework(subject,title,desc,work,due):
     homework = {"subject":subject,
-        "title":title,
+            "title":title,
             "description":desc,
-            "summary":summary,
             "work":work,
             "date":datetime.datetime.utcnow(),
+            "due": due,
             "poster":session['myuser'],
             "status": "incomplete",
             "assignedTo": None,

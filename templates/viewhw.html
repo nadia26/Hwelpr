@@ -4,30 +4,57 @@
 {% endblock %}
 
 {% block bodycontent %}
-<h2><p class="text-center">{{thishomework['title']}}</p></h2>
+<h2><p class="text-center">{{homework['title']}}</p></h2>
 
 
 <br><br>
-Title: {{thishomework['title']}}<br><br>
+Title: {{homework['title']}}<br>
+Subject: {{homework['subject']}} <br>
+Posted by: {{homework['poster']}}<br>
+Posted on: {{homework['date']}}<br><br>
+Due: {{homework['due']}}<br>
+Assignment: {{homework['description']}}<br>
+Initial Work: {{homework['work']}}<br>
 
-Posted by: {{thishomework['poster']}}<br>
-Posted on: {{thishomework['date']}}<br><br>
 
-Assignment: {{thishomework['description']}}<br>
-Summary: {{thishomework['summary']}}<br>
-Initial Work: {{thishomework['work']}}<br>
+<!-- complete -->
+{% if homework['status'] == "complete" %}
+    Status: complete <br><br>
+    Completed By: {{homework['assignedTo']}}<br>
+    Their Work: {{homework['help']}}<br>
 
-{% if thishomework['status'] == "complete" %}
+<!-- in progress -->
+{% elif homework['status'] == "in progress" %}
+    Status: in progress<br>
 
-Help: {{thishomework['help']}}<br>
-Credit to: {{thishomework['assignedto']}}<br>
+    <!--assigned to you-->
+    <!-- PUT UPLOAD METHOD HERE-->
+    {% if homework['assignedTo'] == user %}
+        Claimed by: you!
+        <br><br>
+        <form method="POST">
+        <textarea class="form-control" name="help" rows="10">Put your suggestions here</textarea><br>
+        <input type="submit" name="b" class="btn btn-default" value="Submit">
 
-{% elif thishomework['poster'] != user %}
-<br>
-<form role="form" class="form" method="POST">
-    <input type="submit" name="b" class="btn btn-default" value="Claim">
-</form>
+    <!--assigned to someone else-->
+    {% else %}
+        Claimed by: {{homework['assignedTo']}}<br>
+    {% endif %}
+
+<!--incomplete-->
+{% else %}
+    Status: incomplete
+
+    <!--claim button-->
+    {% if homework['poster'] != user %}
+    <br><br>
+    <form role="form" class="form" method="POST">
+        <input type="submit" name="b" class="btn btn-default" value="Claim">
+    </form>
+    {% endif %}
 
 {% endif %}
+
+
 
 {% endblock %}

@@ -9,7 +9,7 @@ My Recommendations
 
 {% for homework in homeworks %}
 
-{% if homework['poster'] != user %}
+{% if homework['poster'] != user and homework['status'] == "incomplete" %}
 
 
 <div class="col-md-2">
@@ -20,16 +20,14 @@ My Recommendations
 
 <div class="col-md-10">
     
+    
+    <!-- always show this stuff -->
     Title: {{homework['title']}} <br>
     Subject: {{homework['subject']}} <br>
-    Date: {{homework['date']}} <br>
-    Description: {{homework['description']}}<br>
-    <!--
-     Summary: {{homework['summary']}}<br>
-     Work:{{homework['work']}}<br>
-     Poster: {{homework['poster']}}<br>
-     -->
-    <br>
+    Posted by: {{homework['poster']}}<br>
+    Posted on: {{homework['date']}}<br>
+    Due: {{homework['due']}}<br>
+    Assignment: {{homework['description']}}<br><br>
     
 </div>
 
