@@ -3,7 +3,6 @@ from flask import Flask, flash, render_template, request, redirect, url_for, ses
 from pymongo import MongoClient
 from functools import wraps
 
-
 app = Flask(__name__)
 app.secret_key = 'secret'
 
