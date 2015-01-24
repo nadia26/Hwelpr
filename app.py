@@ -102,7 +102,13 @@ def editprofile():
                                username = session['myuser'])
     else:
         if request.form['b']=="Update":
-            #update stuff
+            message = ""
+            user = session['myuser']
+            newname = request.form['name']
+            db.info.update({uname:user}, {name:newname})
+            message = "Update sucessful!" 
+            return render_template("editprofile.html", message=message) 
+            
 
 @app.route("/addhw", methods=["GET","POST"])
 @authenticate("/addhw")
@@ -177,7 +183,9 @@ def authenticate(uname,pword):
 
 def adduser(uname,pword, name):
     if db.info.find_one({'user':uname}) == None:
-        d = {'user':uname,'pass':pword, 'name':name}
+        bio = ""
+        #we still have to add other database elements (like rankings and stuff)
+        d = {'user':uname,'pass':pword, 'name':name, 'bio':bio}
         db.info.insert(d)
         return True
     return False
