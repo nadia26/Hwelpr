@@ -137,21 +137,14 @@ def addhw():
         return render_template("addhw.html", message=message, TDnum = getTDnum(), MYHWnum = getMYHWnum())
     else:
         if request.form['b']=="Submit":
-            print ("\n\n\n")
-            print("within the submit")
-            print ("\n\n\n")
             subject = request.form['r']
-            print(subject)
             title = request.form['title']
-            print(title)
             description = request.form['description']
-            print(description)
             work = request.form['work']
-            print(work)
             tags = request.form['tags']
-            print(tags)
             due = request.form['due']
-            print(due)
+            if (title == "" or description == "" or work == "" or due == ""):
+                return render_template("addhw.html", message = "Please fill in all fields.", TDnum=getTDnum(), MYHWnum=getTDnum())
             addhomework(subject,title,description,work,due,tags)
             return render_template("addhw.html", message="Homework successfully posted.", TDnum = getTDnum(), MYHWnum = getMYHWnum())
 
@@ -199,6 +192,12 @@ def viewhw(idnum):
         user['points'] = user['points'] + 1
         db.info.save(user)
         return redirect(url_for("todo"))
+
+@app.route("/delete/<idnum>")
+#@authenticate("/delete/<idnum>")
+def delete(idnum):
+    homeworks.remove( {"_id": ObjectId(idnum)});
+    return redirect(url_for("myhw"))
 
 @app.route("/claim/<idnum>")
 #@authenticate("/claim/<idnum>")

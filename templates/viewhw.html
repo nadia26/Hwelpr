@@ -45,6 +45,9 @@ Claimed by: you!
   <!--incomplete-->
   {% else %}
   Status: incomplete
+  <br>
+  <br>
+  <a href="/delete/{{homework['_id']}}"><button class="btn btn-default">Delete</button></a>
 
   <!--claim button-->
   {% if homework['poster'] != user %}
