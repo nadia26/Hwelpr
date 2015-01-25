@@ -5,6 +5,8 @@ Search
 
 {% block bodycontent %}
 
+<div class="col-md-12">
+
 <h2><p class="text-center">Look for homework to help with:</p></h2>
 <p class="text-center">{{message}}</p>
 <br>
@@ -34,15 +36,43 @@ Search
   <br>
   <p class="text-center"><input type="text" class="form-control" name="query" placeholder="What are you looking for?"></p>
   <p class="text-center"><input type="submit" name="b" class="btn btn-default" value="Search"></p>
+</form>
   <br>
+  
+  </div>
+  
+  
   {% for result in results %}
+  
+  {% if result['poster'] != user and result['status'] == "incomplete" %}
+
+  
+  <div class="col-md-2">
+      <a href="/viewhw/{{ result['_id'] }}"><button class="btn btn-default">View</button></a>
+      <br>
+      <br>
+      <a href="/claim/{{result['_id']}}"><button class="btn btn-default">Claim</button></a>
+      
+  </div>
+  
+  
+  <div class="col-md-10">
+  
+ 
+  
   Title: {{result['title']}} <br>
   Subject: {{result['subject']}} <br>
-  Date: {{result['date']}}<br>
-  Description: {{result['description']}}<br>
-  Summary: {{result['summary']}}<br>
-  Work: {{result['work']}}<br>
-  Tags: {{result['tags_string']}}<br><br>
+  Tags: {{result['tags_string']}}<br>
+  Posted by: {{result['poster']}}<br>
+  Posted on: {{result['date']}}<br>
+  Due: {{result['due']}}<br>
+  Assignment: {{result['description']}}<br><br>
+  
+  
+  {% endif %}
+  
+  </div>
+  
   {%endfor%}
-</form>
+
 {% endblock %}
