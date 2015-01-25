@@ -137,16 +137,23 @@ def addhw():
         return render_template("addhw.html", message=message, TDnum = getTDnum(), MYHWnum = getMYHWnum())
     else:
         if request.form['b']=="Submit":
+            print ("\n\n\n")
+            print("within the submit")
+            print ("\n\n\n")
             subject = request.form['r']
+            print(subject)
             title = request.form['title']
+            print(title)
             description = request.form['description']
-            content = request.form['content']
-            due = request.form['due']
+            print(description)
+            work = request.form['work']
+            print(work)
             tags = request.form['tags']
-            addhomework(subject,title,description,content,due,tags)
+            print(tags)
+            due = request.form['due']
+            print(due)
+            addhomework(subject,title,description,work,due,tags)
             return render_template("addhw.html", message="Homework successfully posted.", TDnum = getTDnum(), MYHWnum = getMYHWnum())
-        else:
-            return render_template("welcome.html", TDnum = getTDnum(), MYHWnum = getMYHWnum())
 
 @app.route("/myhw")
 @authenticate("/myhw")
@@ -215,9 +222,9 @@ def search():
     else:
             query = request.form['query'].lower()
             #subject = request.form['subject']
-            results = homeworks.find({'tags_array': query})
+            results = homeworks.find({'tags_array': query, 'poster': {'$ne': session['myuser']}, 'status': 'incomplete' })
             return render_template("search.html",
-                                   message= str(results.count() - 1) + " result(s) found",
+                                   message= str(results.count()) + " result(s) found",
                                    results=results, user = session['myuser'],
                                    TDnum = getTDnum(),
                                    MYHWnum = getMYHWnum())
