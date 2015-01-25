@@ -87,7 +87,7 @@ def welcome():
 
 @app.route("/todo")
 def todo():
-    return render_template("todo.html", homeworks = homeworks.find({"assignedTo": session['myuser'], "status": "in progress"}), TDnum = getTDnum(), MYHWnum = getMYHWnum() )
+    return render_template("todo.html", homeworks = homeworks.find({"assignedTo": session['myuser'], "status": "in progress"}), TDnum = getTDnum(), MYHWnum = getMYHWnum())
 
 @app.route("/profile", methods=["GET","POST"])
 @authenticate("/profile")
@@ -208,6 +208,7 @@ def claim(idnum):
 @app.route("/search", methods=["GET","POST"])
 @authenticate("/search")
 def search():
+    message=""
     if request.method=="GET":
         return render_template("search.html", TDnum = getTDnum(), MYHWnum = getMYHWnum())
     else:

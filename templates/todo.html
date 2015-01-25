@@ -3,37 +3,39 @@
 To Do
 {% endblock %}
 
-
-
 {% block bodycontent %}
 <h2><p class="text-center">To Do</p></h2>
-
-{% for homework in homeworks %}
-
-{% if homework['status'] == "in progress" %}
-
-<div class="col-md-2">
-    <a href="/viewhw/{{homework['_id']}}"><button class="btn btn-default">View</button></a>
-    <br>
-</div>
-
-
-<div class="col-md-10">
-    
-    <!-- always show this stuff -->
-    Title: {{homework['title']}} <br>
-    Subject: {{homework['subject']}} <br>
-    Posted by: {{homework['poster']}} <br>
-    Posted on: {{homework['date']}}<br>
-    Due: {{homework['due']}}<br>
-    Assignment: {{homework['description']}}<br>
-    <br>
-    
-</div>
-    
-{% endif %}
-    
-{% endfor %}
-    
-    
+<div class="panel panel-default">
+  <div class="container-fluid">
+    {% for homework in homeworks %}
+    {% if homework['status'] == "in progress" %}
+    <div class="row-fluid">
+      <div class="panel panel-info">
+	<div class="panel-heading">
+	  <h3 class="panel-title">{{homework['title']}}</h3>
+	</div>
+	<div class="panel-body">
+	  <div class="col-md-2">
+	    <br>
+	    <a href="/viewhw/{{homework['_id']}}"><button class="btn btn-default">View</button></a>
+	    <br>
+	  </div>
+	  <div class="col-md-10">
+	    <!-- always show this stuff -->
+	    Subject: {{homework['subject']}} <br>
+	    Posted by: {{homework['poster']}} <br>
+	    Posted on: {{homework['date']}}<br>
+	    Due: {{homework['due']}}<br>
+	    Assignment: {{homework['description']}}<br>
+	    <br>
+	  </div>
+	</div>
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>   
 {% endblock %}
+
+
