@@ -13,22 +13,19 @@ Search
 <form method="POST">
   <center>
     <div class="btn-group" data-toggle="buttons">
+      {% for x in subjects %}
+      {% if x == subject %}
+      <label class="btn btn-danger">
+	<span class="glyphicon glyphicon-pencil"></span>
+	<input type="radio" name="subject" class="btn btn-default" value={{x}}>{{x}}
+      </label>
+      {% else %}
       <label class="btn btn-primary">
 	<span class="glyphicon glyphicon-pencil"></span>
-	<input type="radio" name="subject" class="btn btn-default" value="English">English
+	<input type="radio" name="subject" class="btn btn-default" value={{x}}>{{x}}
       </label>
-      <label class="btn btn-primary">
-	<span class="glyphicon glyphicon-globe"></span>
-	<input type="radio" name="subject" class="btn btn-default" value="History">History
-      </label>
-      <label class="btn btn-primary">
-	<span class="glyphicon glyphicon-stats"></span>
-	<input type="radio" name="subject" class="btn btn-default" value="Math">Math
-      </label>
-      <label class="btn btn-primary">
-	<span class="glyphicon glyphicon-tree-conifer"></span>
-	<input type="radio" name="subject" class="btn btn-default" value="Science">Science
-      </label>
+      {% endif %}
+      {% endfor %}
     </div>
     <input type="hidden" name="subject" value="None">
   </center>
@@ -44,7 +41,7 @@ Search
   
   {% for result in results %}
 
-{% if result['poster'] != user and result['status'] == "incomplete" %}"
+{% if result['poster'] != user and result['status'] == "incomplete" %}
 
 <div class="row-fluid">
     <div class="panel panel-info">
@@ -54,7 +51,7 @@ Search
         <div class="panel-body">
             <div class="col-md-2">
                 <br>
-                <a href="/viewhw/{{result['_id']}}"><button class="btn btn-default">View</button></a>
+                <a href="/viewhw/{{result['_id']}}"><button class="btn btn-primary">View</button></a>
                 <br>
             </div>
             <div class="col-md-10">

@@ -223,8 +223,9 @@ def claim(idnum):
 @authenticate("/search")
 def search():
     message=""
+    subjects = ["English", "History", "Math", "Science"]
     if request.method=="GET":
-        return render_template("search.html", TDnum = getTDnum(), MYHWnum = getMYHWnum())
+        return render_template("search.html",subjects=subjects, TDnum = getTDnum(), MYHWnum = getMYHWnum())
     else:
         query = request.form['query'].lower()
         subject = request.form['subject']
@@ -234,7 +235,7 @@ def search():
             results = homeworks.find({'subject': subject, 'poster': {'$ne': session['myuser']}, 'status': 'incomplete' })
         return render_template("search.html",
                                message= str(results.count()) + " result(s) found",
-                                results=results, user = session['myuser'],
+                                results=results, subject=subject, subjects=subjects, user = session['myuser'],
                                 TDnum = getTDnum(),
                                 MYHWnum = getMYHWnum())
 
