@@ -77,8 +77,8 @@ def signup():
                     return render_template("signup.html", message="Username taken. Try Again.")
             else:
                 return render_template("signup.html", message="Password doesn't match confirmation.")
-            if request.form['b']=="Cancel":
-                return redirect(url_for('login'))
+        if request.form['b']=="Cancel":
+            return redirect(url_for('login'))
 
 @app.route("/welcome")
 @authenticate("/welcome")
@@ -92,10 +92,13 @@ def todo():
 @app.route("/profile", methods=["GET","POST"])
 @authenticate("/profile")
 def profile():
-<<<<<<< HEAD
     if request.method=="GET":
-        return render_template("profile.html", name = getname(session['myuser']),
-                               username = session['myuser'])
+        return render_template("profile.html",
+                               name = getname(session['myuser']),
+                               username = session['myuser'],
+                               points = getpoints(session['myuser']),
+                               MYHWnum = getMYHWnum(),
+                               TDnum = getTDnum())
     else:
         if request.form['b']=="Edit profile":
             return redirect(url_for('editprofile'))
@@ -202,6 +205,12 @@ def getname(uname):
     for user in users:
         if user['user'] == uname:
             return user['name']
+
+def getpoints(uname):
+    users = db.info.find()
+    for user in users:
+        if user['user'] == uname:
+            return user['points']
 
 def getpword(uname):
     names = db.info.find()
