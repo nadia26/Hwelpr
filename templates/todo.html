@@ -6,6 +6,7 @@ To Do
 {% block bodycontent %}
 <h2><p class="text-center">To Do</p></h2>
 <div class="panel panel-default">
+  <br>
   <div class="container-fluid">
     {% for homework in homeworks %}
     {% if homework['status'] == "in progress" %}
@@ -17,18 +18,18 @@ To Do
 	</div>
 	<div class="panel-body">
 	  <div class="col-md-2">
-	    <br>
-	    <a href="/viewhw/{{homework['_id']}}"><button class="btn btn-default">View</button></a>
-	    <br>
+	    <br><br>
+	    <a href="/viewhw/{{homework['_id']}}"><button class="btn btn-primary">View</button></a>
 	  </div>
 	  <div class="col-md-10">
+	    <div class="well well-sm">
 	    <!-- always show this stuff -->
 	    Subject: {{homework['subject']}} <br>
 	    Posted by: {{homework['poster']}} <br>
 	    Posted on: {{homework['date']}}<br>
 	    Due: {{homework['due']}}<br>
-	    Assignment: {{homework['description']}}<br>
-	    <br>
+	    Assignment: {{homework['description']}}
+	    </div>
 	  </div>
 	</div>
       </div>
