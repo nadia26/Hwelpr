@@ -299,7 +299,7 @@ def addhomework(subject,title,desc,work,due,tags):
             "title":title,
             "description":desc,
             "work":work,
-            "date":datetime.datetime.utcnow(),
+            "date": str(datetime.date.today()),
             "due": due,
             "poster":session['myuser'],
             "tags_string":tags.lower(),
