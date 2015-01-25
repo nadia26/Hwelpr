@@ -17,9 +17,9 @@
     Posted by: {{homework['poster']}}<br>
     Due: {{homework['due']}}<br>
     Completed By: {{homework['assignedTo']}}<br><br>
-    <div class="well well-sm">Assignment: {{homework['description']}}</div>
-    <div class="well">Initial Work: {{homework['work']}}</div>
-    <div class="well">Their Work: {{homework['help']}}<br></div>
+    <div class="well well-sm"><b>Assignment:</b> {{homework['description']}}</div>
+    <div class="well"><b>Initial Work:</b> {{homework['work']}}</div>
+    <div class="well"><b>Their Work:</b> {{homework['help']}}<br></div>
   </div>
 </div>
 
@@ -40,8 +40,8 @@
     {% if homework['assignedTo'] == user %}
     Claimed by: you!
     <br><br>
-    <div class="well well-sm">Assignment: {{homework['description']}}</div>
-    <div class="well">Initial Work: {{homework['work']}}</div>
+    <div class="well well-sm"><b>Assignment:</b> {{homework['description']}}</div>
+    <div class="well"><b>Initial Work</b>: {{homework['work']}}</div>
     <form method="POST">
       <textarea class="form-control" name="help" rows="10" placeholder="Put your suggestions here"></textarea><br>
       <input type="submit" name="b" class="btn btn-default" value="Submit"><br>
@@ -51,10 +51,10 @@
       <!--assigned to someone else-->
       {% else %}
       Claimed by:{{homework['assignedTo']}}<br><br>
-      <div class="well well-sm">Assignment: {{homework['description']}}</div>
-      <div class="well">Initial Work: {{homework['work']}}</div><br>
+      <div class="well well-sm"><b>Assignment:</b> {{homework['description']}}</div>
+      <div class="well"><b>Initial Work:</b> {{homework['work']}}</div><br>
       {% endif %}
-      <div class="well well-sm">{{homework['tags_string']}}</div>
+      <div class="well well-sm"><b>Tags:</b> {{homework['tags_string']}}</div>
   </div>
 </div>
 
@@ -71,8 +71,8 @@
     Posted by: {{homework['poster']}}<br>
     Posted on: {{homework['date']}}<br>
     Due: {{homework['due']}}<br><br>
-    <div class="well well-sm">Assignment: {{homework['description']}}</div>
-    <div class="well">Initial Work: {{homework['work']}}</div>
+    <div class="well well-sm"><b>Assignment:</b> {{homework['description']}}</div>
+    <div class="well"><b>Initial Work:</b> {{homework['work']}}</div>
     <!--claim button-->
     {% if homework['poster'] != user %}
     <br><br>
@@ -80,7 +80,7 @@
       <input type="submit" name="b" class="btn btn-default" value="Claim">
     </form>
     {% endif %}
-    <div class="well well-sm">{{homework['tags_string']}}</div>
+    <div class="well well-sm"><b>Tags:</b> {{homework['tags_string']}}</div>
   </div>
 </div>
 {% endif %}
