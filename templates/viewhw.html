@@ -47,6 +47,7 @@
       <input type="submit" name="b" class="btn btn-default" value="Submit"><br>
     </form>
 
+
       <!--assigned to someone else-->
       {% else %}
       Claimed by:{{homework['assignedTo']}}<br><br>
@@ -56,6 +57,7 @@
       <div class="well well-sm">{{homework['tags_string']}}</div>
   </div>
 </div>
+
 
 <!--incomplete-->
 {% else %}
