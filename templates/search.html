@@ -6,19 +6,42 @@ Search
 {% block bodycontent %}
 
 <h2><p class="text-center">Look for homework to help with:</p></h2>
-      <p class="text-center">{{message}}</p>
-      <form method="POST">
-	<p class="text-center"><input type="text" class="form-control" name="query" placeholder="What are you looking for?"></p>
-	<p class="text-center"><input type="submit" name="b" class="btn btn-default" value="Search"></p>
-	<br>
-	{% for result in results %}
-	Title: {{result['title']}} <br>
-	Subject: {{result['subject']}} <br>
-	Date: {{result['date']}}<br>
-	Description: {{result['description']}}<br>
-	Summary: {{result['summary']}}<br>
-	Work: {{result['work']}}<br>
-	Tags: {{result['tags_string']}}<br><br>
-	{%endfor%}
-      </form>
+<p class="text-center">{{message}}</p>
+<br>
+<form method="POST">
+  <center>
+    <div class="btn-group" data-toggle="buttons">
+      <label class="btn btn-primary">
+	<span class="glyphicon glyphicon-pencil"></span>
+	<input type="radio" name="subject" class="btn btn-default" value="English">English
+      </label>
+      <label class="btn btn-primary">
+	<span class="glyphicon glyphicon-globe"></span>
+	<input type="radio" name="subject" class="btn btn-default" value="History">History
+      </label>
+      <label class="btn btn-primary">
+	<span class="glyphicon glyphicon-stats"></span>
+	<input type="radio" name="subject" class="btn btn-default" value="Math">Math
+      </label>
+      <label class="btn btn-primary">
+	<span class="glyphicon glyphicon-tree-conifer"></span>
+	<input type="radio" name="subject" class="btn btn-default" value="Science">Science
+      </label>
+    </div>
+  </center>
+  <br>
+  <br>
+  <p class="text-center"><input type="text" class="form-control" name="query" placeholder="What are you looking for?"></p>
+  <p class="text-center"><input type="submit" name="b" class="btn btn-default" value="Search"></p>
+  <br>
+  {% for result in results %}
+  Title: {{result['title']}} <br>
+  Subject: {{result['subject']}} <br>
+  Date: {{result['date']}}<br>
+  Description: {{result['description']}}<br>
+  Summary: {{result['summary']}}<br>
+  Work: {{result['work']}}<br>
+  Tags: {{result['tags_string']}}<br><br>
+  {%endfor%}
+</form>
 {% endblock %}
