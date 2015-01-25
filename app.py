@@ -266,7 +266,7 @@ def addhomework(subject,title,desc,work,due,tags):
             "due": due,
             "poster":session['myuser'],
             "tags_string":tags.lower(),
-            "tags_array":tags.lower().split(","),
+            "tags_array":tags.lower().split(", "),
             "status": "incomplete",
             "assignedTo": None,
             "help": None}
@@ -286,9 +286,14 @@ def searchtags(query, subject):
     #loops through each homework in database looking for tag in common with query
     num_results = 0
     results = []
-    for homework in homeworks.find({"subject": subject, "tags_array": query}):
-        num_results+=1
-        results.append(homework)
+    if (subject!="None"):
+        for homework in homeworks.find({"subject": subject, "tags_array": query}):
+            num_results+=1
+            results.append(homework)
+    else:
+        for homework in homeworks.find({"tags_array": query}):
+            num_results+=1
+            results.append(homework)
     return (num_results, results)
 
 if __name__=="__main__":
