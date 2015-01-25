@@ -49,10 +49,14 @@ def login():
         if request.form['b']=="Sign Up":
             return redirect(url_for('signup'))
 
+@app.route("/todo")
+def todo():
+    return render_template("todo.html")
+
 @app.route("/logout")
 def logout():
     session.pop("myuser", None)
-    print(session)
+    #print(session)
     return redirect(url_for('login'))
 
 @app.route("/signup", methods=["GET","POST"])
@@ -87,7 +91,8 @@ def welcome():
 @app.route("/profile", methods=["GET","POST"])
 @authenticate("/profile")
 def profile():
-    return render_template("profile.html", name = getname(session['myuser']))
+    return render_template("profile.html", name = getname(session['myuser']),
+                                                          username = session['myuser'])
 
 @app.route("/addhw", methods=["GET","POST"])
 @authenticate("/addhw")
@@ -99,42 +104,44 @@ def addhw():
         if request.form['b']=="Submit":
             subject = request.form['r']
             title = request.form['title']
+            print(title);
             description = request.form['description']
             summary = request.form['summary']
             content = request.form['content']
-            #tags = request.form['tags']
-            addhomework(subject,title,description,summary,content)
+            tags = request.form['tags']
+            addhomework(subject,title,description,summary,content,tags)
             return render_template("addhw.html", message="Homework successfully posted.")
         else:
             return render_template("welcome.html")
 
-@app.route("/myhw", methods=["GET","POST"])
+@app.route("/myhw")
 @authenticate("/myhw")
 def myhw():
-    if request.method=="GET":
-        myhomeworks = homeworks.find({"poster":session['myuser']})
-        return render_template("myhw.html", homeworks=myhomeworks)
-    else:
-        return render_template("welcome.html")
+    myhomeworks = homeworks.find({"poster":session['myuser']})
+    return render_template("myhw.html", homeworks=myhomeworks)
 
-@app.route("/myrecs", methods=["GET","POST"])
+@app.route("/myrecs", methods=["GET", "POST"])
 @authenticate("/myrecs")
 def myrecs():
     if request.method=="GET":
-        return render_template("myrecs.html")
-    else:
-        return render_template("welcome.html")
+        return render_template("myrecs.html",homeworks = homeworks.find(), user=session['myuser'])
+
 
 @app.route("/search", methods=["GET","POST"])
 @authenticate("/search")
 def search():
+    #subject = request.args.get('subject')
+    #print subject
     if request.method=="GET":
         return render_template("search.html")
     else:
+        if request.form['subject']=="English":
+            print "English"
         if request.form['b']=="Search":
             query = request.form['query']
-            #searching stuff!!
-            return render_template("search.html",message=query)
+            num_results = searchtags(query)[0]
+            results = searchtags(query)[1]
+            return render_template("search.html",message=str(num_results)+" result(s) found",results=results)
         else:
             return render_template("welcome.html")
 
@@ -154,37 +161,49 @@ def getpword(uname):
 def authenticate(uname,pword):
     names = db.info.find()
     for name in names:
-        print name
+        #print name
         if name['user'] == uname:
             if name['pass'] == pword:
                 return True
     return False
 
-def adduser(uname,pword, name):
+def adduser(uname,pword,name):
     if db.info.find_one({'user':uname}) == None:
         d = {'user':uname,'pass':pword, 'name':name}
         db.info.insert(d)
         return True
     return False
 
-#adds homework to database (WIP):
-def addhomework(subject,title,desc,summary,work):
+#adds homework to database
+def addhomework(subject,title,desc,summary,work,tags):
     homework = {"subject":subject,
-            "title":title,
-            "description":desc,
-            "summary":summary,
-            "work":work,
-            "date":datetime.datetime.utcnow(),
-            "poster":session['myuser']}
+                "title":title,
+                "description":desc,
+                "summary":summary,
+                "work":work,
+                "date":datetime.datetime.utcnow(),
+                "poster":session['myuser'],
+                "tags_string":tags.lower(),
+                "tags_array":tags.lower().split(" ")
+                
+}
     post_id = homeworks.insert(homework)
     #for testing purposes, prints homeworks in terminal:
     #for homework in homeworks.find():
     #   print(homework)
 
+def searchtags(query):
+    #loops through each homework in database looking for tag in common with query
+    num_results = 0
+    results = []
+    for homework in homeworks.find({"tags_array": query}):
+        num_results+=1
+        results.append(homework)
+    return (num_results, results)
+
 if __name__=="__main__":
     client = MongoClient()
     db = client['1258']
-    #homework collection in database (WIP):
     homeworks = db['homeworks']
     app.debug=True
     app.run()

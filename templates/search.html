@@ -10,18 +10,23 @@ Search
 <br>
 <form method="POST">
   <center>
-    <div class="btn-group" role="group" aria-label="...">
-      <div class="btn-group" role="group">
-	<button type="submit" name="b" class="btn btn-default" aria-expanded="false" value="english">English</button>
-      </div>
-      <div class="btn-group" role="group">
-	<button type="submit" name="b" class="btn btn-default" aria-expanded="false" value="history">History</button>
-      </div>
-      <div class="btn-group" role="group">
-	<button type="submit" name="b" class="btn btn-default" aria-expanded="false" value="math">Math</button>
-      <div class="btn-group" role="group">
-	<button type="submit" name="b" class="btn btn-default" aria-expanded="false" value="science">Science</button>
-      </div>
+    <div class="btn-group" data-toggle="buttons">
+      <label class="btn btn-primary">
+	<span class="glyphicon glyphicon-pencil"></span>
+	<input type="radio" name="subject" class="btn btn-default" value="English">English
+      </label>
+      <label class="btn btn-primary">
+	<span class="glyphicon glyphicon-globe"></span>
+	<input type="radio" name="subject" class="btn btn-default" value="History">History
+      </label>
+      <label class="btn btn-primary">
+	<span class="glyphicon glyphicon-stats"></span>
+	<input type="radio" name="subject" class="btn btn-default" value="Math">Math
+      </label>
+      <label class="btn btn-primary">
+	<span class="glyphicon glyphicon-tree-conifer"></span>
+	<input type="radio" name="subject" class="btn btn-default" value="Science">Science
+      </label>
     </div>
   </center>
   <br>
