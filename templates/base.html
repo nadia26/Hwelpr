@@ -35,12 +35,24 @@
                     <ul class="nav navbar-nav">
                         <li><a href="/profile">Profile</a></li>
                         <li><a href="/addhw">Add HW</a></li>
+                        
+                        {% if MYHWnum > 0 %}
+                        <li><a href="/myhw">My HW ({{MYHWnum}})</a></li>
+                        {% else %}
                         <li><a href="/myhw">My HW</a></li>
+                        {% endif %}
+                        
                         <li><a href="/myrecs">My Recs</a></li>
                         <li><a href="/search">Search</a></li>
+                        
+                        {% if TDnum > 0 %}
+                        <li><a href="/todo">To Do ({{TDnum}})</a></li>
+                        {% else %}
                         <li><a href="/todo">To Do</a></li>
+                        {% endif %}
+                        
                         <p class="navbar-text">Logged in as {{ session['myuser'] }}</p>
-                        <li><a href="/">LOG OUT</a></li>
+                        <li><a href="/logout">LOG OUT</a></li>
                     </ul>
                 </div>
             </div>

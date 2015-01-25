@@ -5,4 +5,34 @@ My Recommendations
 
 {% block bodycontent %}
 <h2><p class="text-center">My Recomendations</p></h2>
+
+
+{% for homework in homeworks %}
+
+{% if homework['poster'] != user and homework['status'] == "incomplete" %}
+
+
+<div class="col-md-2">
+    <a href="/viewhw/{{homework['_id']}}"><button class="btn btn-default">View</button></a>
+    <br>
+</div>
+
+
+<div class="col-md-10">
+    
+    
+    <!-- always show this stuff -->
+    Title: {{homework['title']}} <br>
+    Subject: {{homework['subject']}} <br>
+    Posted by: {{homework['poster']}}<br>
+    Posted on: {{homework['date']}}<br>
+    Due: {{homework['due']}}<br>
+    Assignment: {{homework['description']}}<br><br>
+    
+</div>
+
+{% endif %}
+
+{% endfor %}
+
 {% endblock %}

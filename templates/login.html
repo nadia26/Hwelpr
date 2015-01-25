@@ -9,6 +9,13 @@
    
     <style type="text/css">
       body { background: #ffffff;}
+      .text-center { color: #6b00cf;}
+      .boxed {
+      border: 1px solid red;
+      width: 500px;
+      margin: 0 auto;
+      text-align: center;
+      }
       .text-center { color: #6b00cf;} 
     </style>
 
@@ -20,7 +27,13 @@
 
      <center> <img src="{{ url_for( 'static',filename='hwelprlogo1.png') }}" alt="HWelper" width=300 height=300></center>
       <h3><p class="text-center">The simple, educational, and classy way to get and give help on homework.</p></h3>
-      <h4><p class="text-center">{{message}}</p></h4>
+      
+      {% if message %}
+      <div class="boxed">
+          <h4><p class="text-center">{{message}}</p></h4>
+      </div>
+      
+      {% endif %}
 
 
       <div class="container-fluid" style="max-width:400px;">
