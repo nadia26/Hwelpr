@@ -1,8 +1,8 @@
 import datetime
 from flask import Flask, flash, render_template, request, redirect, url_for, session, escape
+<<<<<<< HEAD
 from pymongo import MongoClient
 from functools import wraps
-
 
 app = Flask(__name__)
 app.secret_key = 'secret'
@@ -91,8 +91,28 @@ def welcome():
 @app.route("/profile", methods=["GET","POST"])
 @authenticate("/profile")
 def profile():
-    return render_template("profile.html", name = getname(session['myuser']),
-                                                          username = session['myuser'])
+    if request.method=="GET":
+        return render_template("profile.html", name = getname(session['myuser']),
+                               username = session['myuser'])
+    else:
+        if request.form['b']=="Edit profile":
+            return redirect(url_for('editprofile'))
+
+@app.route("/editprofile", methods=["GET","POST"])
+@authenticate("/editprofile")
+def editprofile():
+    if request.method=="GET":
+        return render_template("editprofile.html", name = getname(session['myuser']),
+                               username = session['myuser'])
+    else:
+        if request.form['b']=="Update":
+            message = ""
+            user = session['myuser']
+            newname = request.form['name']
+            db.info.update({uname:user}, {name:newname})
+            message = "Update sucessful!" 
+            return render_template("editprofile.html", message=message) 
+            
 
 @app.route("/addhw", methods=["GET","POST"])
 @authenticate("/addhw")
@@ -167,7 +187,9 @@ def authenticate(uname,pword):
 
 def adduser(uname,pword,name):
     if db.info.find_one({'user':uname}) == None:
-        d = {'user':uname,'pass':pword, 'name':name}
+        bio = ""
+        #we still have to add other database elements (like rankings and stuff)
+        d = {'user':uname,'pass':pword, 'name':name, 'bio':bio}
         db.info.insert(d)
         return True
     return False
