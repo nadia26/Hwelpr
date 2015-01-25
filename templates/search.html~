@@ -10,34 +10,58 @@ Search
 <br>
 <form method="POST">
   <center>
-    <div class="btn-group" role="group" aria-label="...">
-      <div class="btn-group" data-toggle="buttons-radio" role="group">
-	<input name="subject" type="radio" class="btn btn-default" aria-expanded="false" value="English">English</button>
-      </div>
-      <div class="btn-group" role="group">
-	<input name="subject" type="radio" class="btn btn-default" aria-expanded="false" value="History"></button>
-      </div>
-      <div class="btn-group" role="group">
-	<input name="subject" type="radio" class="btn btn-default" aria-expanded="false" value="Math"></button>
-      </div>
-      <div class="btn-group" role="group">
-	<input name="subject" type="radio" class="btn btn-default" aria-expanded="false" value="Science"></button>
-      </div>
+    <div class="btn-group" data-toggle="buttons">
+      <label class="btn btn-primary">
+	<span class="glyphicon glyphicon-pencil"></span>
+	<input type="radio" name="subject" class="btn btn-default" value="English">English
+      </label>
+      <label class="btn btn-primary">
+	<span class="glyphicon glyphicon-globe"></span>
+	<input type="radio" name="subject" class="btn btn-default" value="History">History
+      </label>
+      <label class="btn btn-primary">
+	<span class="glyphicon glyphicon-stats"></span>
+	<input type="radio" name="subject" class="btn btn-default" value="Math">Math
+      </label>
+      <label class="btn btn-primary">
+	<span class="glyphicon glyphicon-tree-conifer"></span>
+	<input type="radio" name="subject" class="btn btn-default" value="Science">Science
+      </label>
     </div>
+    <input type="hidden" name="subject" value="None">
   </center>
   <br>
   <br>
   <p class="text-center"><input type="text" class="form-control" name="query" placeholder="What are you looking for?"></p>
   <p class="text-center"><input type="submit" name="b" class="btn btn-default" value="Search"></p>
   <br>
-  {% for result in results %}
-  Title: {{result['title']}} <br>
-  Subject: {{result['subject']}} <br>
-  Date: {{result['date']}}<br>
-  Description: {{result['description']}}<br>
-  Summary: {{result['summary']}}<br>
-  Work: {{result['work']}}<br>
-  Tags: {{result['tags_string']}}<br><br>
-  {%endfor%}
+  <div class="panel panel-default">
+    <div class="container-fluid">
+      {% for result in results %}
+      {% if subject == result['subject'] %}
+      <div class="row-fluid">
+	<div class="panel panel-info">
+	  <div class="panel-heading">
+	    <h3 class="panel-title">{{result['title']}}</h3>
+	  </div>
+	  <div class="panel-body">
+	    <div class="col-md-2">
+	      <br>
+	      <input type="submit" name="b" id={{result['_id']}} class="btn btn-default" value="View">
+	      <br>
+	    </div>
+	    <div class="col-md-10">
+	      Date: {{result['date']}}<br>
+	      Description: {{result['description']}}<br>
+	      Summary: {{result['summary']}}<br>
+	      Tags: {{result['tags_string']}}<br><br>
+	    </div>
+	  </div>
+	</div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
 </form>
 {% endblock %}

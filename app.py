@@ -87,7 +87,7 @@ def welcome():
 
 @app.route("/todo")
 def todo():
-    return render_template("todo.html", homeworks = homeworks.find({"assignedTo": session['myuser'], "status": "in progress"}), TDnum = getTDnum(), MYHWnum = getMYHWnum() )
+    return render_template("todo.html", homeworks = homeworks.find({"assignedTo": session['myuser'], "status": "in progress"}), TDnum = getTDnum(), MYHWnum = getMYHWnum())
 
 @app.route("/profile", methods=["GET","POST"])
 @authenticate("/profile")
@@ -138,6 +138,7 @@ def editprofile():
             message = "Update sucessful!" 
             return render_template("editprofile.html", message=message, name=newname, TDnum = getTDnum(), MYHWnum = getMYHWnum())
 
+
 @app.route("/addhw", methods=["GET","POST"])
 @authenticate("/addhw")
 def addhw():
@@ -149,13 +150,13 @@ def addhw():
             subject = request.form['r']
             title = request.form['title']
             description = request.form['description']
-            content = request.form['content']
-            due = request.form['due']
+            work = request.form['work']
             tags = request.form['tags']
-            addhomework(subject,title,description,content,due,tags)
+            due = request.form['due']
+            if (title == "" or description == "" or work == "" or due == ""):
+                return render_template("addhw.html", message = "Please fill in all fields.", TDnum=getTDnum(), MYHWnum=getTDnum())
+            addhomework(subject,title,description,work,due,tags)
             return render_template("addhw.html", message="Homework successfully posted.", TDnum = getTDnum(), MYHWnum = getMYHWnum())
-        else:
-            return render_template("welcome.html", TDnum = getTDnum(), MYHWnum = getMYHWnum())
 
 @app.route("/myhw")
 @authenticate("/myhw")
@@ -168,7 +169,7 @@ def myhw():
                            MYHWnum = getMYHWnum(),
                            )
 
-@app.route("/myrecs", methods= ["GET", "POST"])
+@app.route("/myrecs")
 @authenticate("/myrecs")
 def myrecs():
     return render_template("myrecs.html",
@@ -202,6 +203,12 @@ def viewhw(idnum):
         db.info.save(user)
         return redirect(url_for("todo"))
 
+@app.route("/delete/<idnum>")
+#@authenticate("/delete/<idnum>")
+def delete(idnum):
+    homeworks.remove( {"_id": ObjectId(idnum)});
+    return redirect(url_for("myhw"))
+
 @app.route("/claim/<idnum>")
 #@authenticate("/claim/<idnum>")
 def claim(idnum):
@@ -218,18 +225,37 @@ def claim(idnum):
 @app.route("/search", methods=["GET","POST"])
 @authenticate("/search")
 def search():
+    message=""
     if request.method=="GET":
         return render_template("search.html", TDnum = getTDnum(), MYHWnum = getMYHWnum())
     else:
-        if request.form['b']=="Search":
-            query = request.form['query'].lower()
-            subject = request.form['subject']
-            print subject
-            num_results = searchtags(query, subject)[0]
-            results = searchtags(query, subject)[1]
-            return render_template("search.html",message=str(num_results)+" result(s) found",results=results,TDnum = getTDnum(), MYHWnum = getMYHWnum())
+        query = request.form['query'].lower()
+        subject = request.form['subject']
+        if (query != ""):
+            results = homeworks.find({'tags_array': query, 'poster': {'$ne': session['myuser']}, 'status': 'incomplete' })
         else:
-            return render_template("welcome.html", TDnum = getTDnum(), MYHWnum = getMYHWnum() )
+            results = homeworks.find({'subject': subject, 'poster': {'$ne': session['myuser']}, 'status': 'incomplete' })
+        return render_template("search.html",
+                               message= str(results.count()) + " result(s) found",
+                                results=results, user = session['myuser'],
+                                TDnum = getTDnum(),
+                                MYHWnum = getMYHWnum())
+
+"""
+def searchtags(query, subject):
+    #loops through each homework in database looking for tag in common with query
+    num_results = 0
+    results = []
+    if (subject!="None"):
+        for homework in homeworks.find({"subject": subject, "tags_array": query}):
+            num_results+=1
+            results.append(homework)
+    else:
+        for homework in homeworks.find({"tags_array": query}):
+            num_results+=1
+            results.append(homework)
+    return (num_results, results)
+"""
 
 def getname(uname):
     users = db.info.find()
@@ -277,7 +303,7 @@ def addhomework(subject,title,desc,work,due,tags):
             "due": due,
             "poster":session['myuser'],
             "tags_string":tags.lower(),
-            "tags_array":tags.lower().split(","),
+            "tags_array":tags.lower().split(", "),
             "status": "incomplete",
             "assignedTo": None,
             "help": None}
@@ -293,14 +319,6 @@ def getMYHWnum():
     return homeworks.find( {"poster": session['myuser'],  "status" : { "$in": ["in progress", "incomplete"] } } ).count()
 
 
-def searchtags(query, subject):
-    #loops through each homework in database looking for tag in common with query
-    num_results = 0
-    results = []
-    for homework in homeworks.find({"subject": subject, "tags_array": query}):
-        num_results+=1
-        results.append(homework)
-    return (num_results, results)
 
 if __name__=="__main__":
     client = MongoClient()
