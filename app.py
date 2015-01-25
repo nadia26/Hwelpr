@@ -92,7 +92,6 @@ def todo():
 @app.route("/profile", methods=["GET","POST"])
 @authenticate("/profile")
 def profile():
-<<<<<<< HEAD
     if request.method=="GET":
         return render_template("profile.html", name = getname(session['myuser']),
                                username = session['myuser'])
@@ -114,11 +113,8 @@ def editprofile():
             user['name'] = newname
             db.info.save(user)
             message = "Update sucessful!" 
-<<<<<<< HEAD
+
             return render_template("editprofile.html", message=message, name=newname) 
-            
-=======
-            return render_template("editprofile.html", message=message)
         else:
             user = db.info.find_one({'user':session['myuser']})
             return render_template("profile.html",
@@ -127,7 +123,6 @@ def editprofile():
                                    TDnum = getTDnum(),
                                    MYHWnum = getMYHWnum(),
                                    points = user['points'])
->>>>>>> 9b6859c9e0e46a4f7e821f7b46e7f572dd6b936a
 
 @app.route("/addhw", methods=["GET","POST"])
 @authenticate("/addhw")
