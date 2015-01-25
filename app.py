@@ -1,6 +1,5 @@
 import datetime
 from flask import Flask, flash, render_template, request, redirect, url_for, session, escape
-<<<<<<< HEAD
 from pymongo import MongoClient
 from functools import wraps
 
@@ -103,11 +102,12 @@ def editprofile():
     else:
         if request.form['b']=="Update":
             message = ""
-            user = session['myuser']
             newname = request.form['name']
-            db.info.update({uname:user}, {name:newname})
+            user = db.info.find_one({'user':session['myuser']})
+            user['name'] = newname
+            db.info.save(user)
             message = "Update sucessful!" 
-            return render_template("editprofile.html", message=message) 
+            return render_template("editprofile.html", message=message, name=newname) 
             
 
 @app.route("/addhw", methods=["GET","POST"])
@@ -181,7 +181,7 @@ def authenticate(uname,pword):
                 return True
     return False
 
-def adduser(uname,pword, name):
+def adduser(uname,pword,name):
     if db.info.find_one({'user':uname}) == None:
         bio = ""
         #we still have to add other database elements (like rankings and stuff)
