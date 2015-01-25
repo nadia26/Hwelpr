@@ -219,9 +219,6 @@ def claim(idnum):
     return redirect(url_for("todo"))
 
 
-
-
-
 @app.route("/search", methods=["GET","POST"])
 @authenticate("/search")
 def search():
