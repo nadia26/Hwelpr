@@ -7,7 +7,6 @@ My Homework
 <h2><p class="text-center">My Homework</p></h2>
 
 {% if incomplete.count() > 0 %}
-<<<<<<< HEAD
 <div class="panel panel-default">
   <div class="container-fluid">
     <div class="panel-heading">
@@ -40,25 +39,6 @@ My Homework
     </div>
     {% endfor %}
   </div>
-=======
-<b>Incomplete:</b><br><br>
-
-{% for homework in incomplete %}
-<div class="col-md-2">
-    <a href="/viewhw/{{homework['_id']}}"><button class="btn btn-default">View</button></a>
-    <br>
-</div>
-<div class="col-md-10">
-    <!-- always show this stuff -->
-    Title: {{homework['title']}} <br>
-    Subject: {{homework['subject']}} <br>
-    Tags: {{homework['tags_string']}}<br>
-    Posted: {{homework['date']}}<br>
-    Due: {{homework['due']}}<br>
-    Assignment: {{homework['description']}}<br>
-    <!--Status: {{homework['status']}}<br>-->
-    <br>
->>>>>>> master
 </div>
 {% endif %}
 
@@ -69,8 +49,6 @@ My Homework
       <h3 class="panel-title">
 	<b>In Progress:</b><br><br></h3>
     </div>
-
-<<<<<<< HEAD
     {% for homework in inprogress %}
     <div class="row-fluid">
       <div class="panel panel-info">
@@ -98,23 +76,6 @@ My Homework
     </div>
     {% endfor %}
   </div>
-=======
-{% for homework in inprogress %}
-<div class="col-md-2">
-    <a href="/viewhw/{{homework['_id']}}"><button class="btn btn-default">View</button></a>
-    <br>
-</div>
-<div class="col-md-10">
-    <!-- always show this stuff -->
-    Title: {{homework['title']}} <br>
-    Subject: {{homework['subject']}} <br>
-    Tags: {{homework['tags_string']}}<br>
-    Posted: {{homework['date']}}<br>
-    Due: {{homework['due']}}<br>
-    Assignment: {{homework['description']}}<br>
-    Assigned to: {{homework['assignedTo']}}
-    <br>
->>>>>>> master
 </div>
 {% endif %}
 
@@ -125,8 +86,6 @@ My Homework
       <h3 class="panel-title">
 	<b>Complete:</b><br><br></h3>
     </div>
-
-<<<<<<< HEAD
     {% for homework in completed %}
     <div class="row-fluid">
       <div class="panel panel-info">

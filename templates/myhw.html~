@@ -6,18 +6,155 @@ My Homework
 {% block bodycontent %}
 <h2><p class="text-center">My Homework</p></h2>
 
+{% if incomplete.count() > 0 %}
+<<<<<<< HEAD
+<div class="panel panel-default">
+  <div class="container-fluid">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+	<b>Incomplete:</b><br><br></h3>
+    </div>
+    {% for homework in incomplete %}
+    <div class="row-fluid">
+      <div class="panel panel-info">
+	<div class="panel-heading">
+	  <h3 class="panel-title">{{homework['title']}}</h3>
+	</div>
+	<div class="panel-body">
+	  <div class="col-md-2">
+	    <br>
+	    <a href="/viewhw/{{homework['_id']}}"><button class="btn btn-default">View</button></a>
+	    <br>
+	  </div>
+	  <div class="col-md-10">
+	    <!-- always show this stuff -->
+	    Subject: {{homework['subject']}} <br>
+	    Posted: {{homework['date']}}<br>
+	    Due: {{homework['due']}}<br>
+	    Assignment: {{homework['description']}}<br>
+	    <!--Status: {{homework['status']}}<br>-->
+	    <br>
+	  </div>
+	</div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+=======
+<b>Incomplete:</b><br><br>
 
-{% for homework in homeworks %}
+{% for homework in incomplete %}
+<div class="col-md-2">
+    <a href="/viewhw/{{homework['_id']}}"><button class="btn btn-default">View</button></a>
+    <br>
+</div>
+<div class="col-md-10">
+    <!-- always show this stuff -->
+    Title: {{homework['title']}} <br>
+    Subject: {{homework['subject']}} <br>
+    Tags: {{homework['tags_string']}}<br>
+    Posted: {{homework['date']}}<br>
+    Due: {{homework['due']}}<br>
+    Assignment: {{homework['description']}}<br>
+    <!--Status: {{homework['status']}}<br>-->
+    <br>
+>>>>>>> master
+</div>
+{% endif %}
 
-Title: {{homework['title']}} <br>
-Subject: {{homework['subject']}} <br>
-Date: {{homework['date']}}<br>
-Description: {{homework['description']}}<br>
-Summary: {{homework['summary']}}<br>
-Work:{{homework['work']}}<br>
-<br>
+{% if inprogress.count() > 0 %}
+<div class="panel panel-default">
+  <div class="container-fluid">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+	<b>In Progress:</b><br><br></h3>
+    </div>
 
-{% endfor %}
+<<<<<<< HEAD
+    {% for homework in inprogress %}
+    <div class="row-fluid">
+      <div class="panel panel-info">
+	<div class="panel-heading">
+	  <h3 class="panel-title">{{homework['title']}}</h3>
+	</div>
+	<div class="panel-body">
+	  <div class="col-md-2">
+	    <br>
+	    <a href="/viewhw/{{homework['_id']}}"><button class="btn btn-default">View</button></a>
+	    <br>
+	  </div>
+	  <div class="col-md-10">
+	    <!-- always show this stuff -->
+	    Subject: {{homework['subject']}} <br>
+	    Posted: {{homework['date']}}<br>
+	    Due: {{homework['due']}}<br>
+	    Assignment: {{homework['description']}}<br>
+	    Assigned to: {{homework['assignedTo']}}
+	    <br>
+	  </div>
+
+	</div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+=======
+{% for homework in inprogress %}
+<div class="col-md-2">
+    <a href="/viewhw/{{homework['_id']}}"><button class="btn btn-default">View</button></a>
+    <br>
+</div>
+<div class="col-md-10">
+    <!-- always show this stuff -->
+    Title: {{homework['title']}} <br>
+    Subject: {{homework['subject']}} <br>
+    Tags: {{homework['tags_string']}}<br>
+    Posted: {{homework['date']}}<br>
+    Due: {{homework['due']}}<br>
+    Assignment: {{homework['description']}}<br>
+    Assigned to: {{homework['assignedTo']}}
+    <br>
+>>>>>>> master
+</div>
+{% endif %}
+
+{% if completed.count() > 0 %}
+<div class="panel panel-default">
+  <div class="container-fluid">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+	<b>Complete:</b><br><br></h3>
+    </div>
+
+<<<<<<< HEAD
+    {% for homework in completed %}
+    <div class="row-fluid">
+      <div class="panel panel-info">
+	<div class="panel-heading">
+	  <h3 class="panel-title">{{homework['title']}}</h3>
+	</div>
+	<div class="panel-body">
+	  <div class="col-md-2">
+	    <br>
+	    <a href="/viewhw/{{homework['_id']}}"><button class="btn btn-default">View</button></a>
+	    <br>
+	  </div>
+	  <div class="col-md-10">
+	    <!-- always show this stuff -->
+	    Subject: {{homework['subject']}} <br>
+	    Posted: {{homework['date']}}<br>
+	    Due: {{homework['due']}}<br>
+	    Assignment: {{homework['description']}}<br>
+	    <br>
+	  </div>
+
+	</div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
 
 
 {% endblock %}
