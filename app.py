@@ -108,25 +108,35 @@ def profile():
 def editprofile():
     if request.method=="GET":
         return render_template("editprofile.html", name = getname(session['myuser']),
-                               username = session['myuser'])
+                               username = session['myuser'],TDnum = getTDnum(), MYHWnum = getMYHWnum())
     else:
         if request.form['b']=="Update":
             message = ""
             newname = request.form['name']
+            newusername = request.form['username']
+            bio = request.form['bio']
             user = db.info.find_one({'user':session['myuser']})
-            user['name'] = newname
+            if newname != None:
+                #db.info.update({'user':session['myuser']},
+                #               {"$set":{'name':newname}},
+                #               upsert = True)
+                user['name'] = newname
+                print "\n\n\n\n"
+                print user['name']
+                print "\n\n\n\n"
+            if newusername != None:
+                #db.info.update({'user':session['myuser']},
+                #               {"$set":{'user':newusername}},
+                #  upsert = True)
+                user['user'] = newusername
+            if bio != None:
+                #db.info.update({'user':session['myuser']},
+                #               {"$set":{'bio':bio}},
+                 #              upsert = True)
+                user['bio'] = bio
             db.info.save(user)
             message = "Update sucessful!" 
-
-            return render_template("editprofile.html", message=message, name=newname) 
-        else:
-            user = db.info.find_one({'user':session['myuser']})
-            return render_template("profile.html",
-                                   name = getname(session['myuser']),
-                                   username = session['myuser'],
-                                   TDnum = getTDnum(),
-                                   MYHWnum = getMYHWnum(),
-                                   points = user['points'])
+            return render_template("editprofile.html", message=message, name=newname, TDnum = getTDnum(), MYHWnum = getMYHWnum())
 
 @app.route("/addhw", methods=["GET","POST"])
 @authenticate("/addhw")
@@ -221,7 +231,6 @@ def search():
         else:
             return render_template("welcome.html", TDnum = getTDnum(), MYHWnum = getMYHWnum() )
 
-
 def getname(uname):
     users = db.info.find()
     for user in users:
@@ -253,7 +262,7 @@ def adduser(uname,pword,name):
     if db.info.find_one({'user':uname}) == None:
         bio = ""
         #we still have to add other database elements (like rankings and stuff)
-        d = {'user':uname,'pass':pword, 'name':name, 'bio':bio,'points': 0}
+        d = {'user':uname,'pass':pword, 'name':name, 'bio':bio, 'points': 0}
         db.info.insert(d)
         return True
     return False
@@ -297,5 +306,6 @@ if __name__=="__main__":
     client = MongoClient()
     db = client['1258']
     homeworks = db['homeworks']
+    info = db['info']
     app.debug=True
     app.run()
