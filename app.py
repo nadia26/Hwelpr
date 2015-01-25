@@ -130,17 +130,15 @@ def myrecs():
 @app.route("/search", methods=["GET","POST"])
 @authenticate("/search")
 def search():
-    #subject = request.args.get('subject')
-    #print subject
     if request.method=="GET":
         return render_template("search.html")
     else:
-        if request.form['subject']=="English":
-            print "English"
         if request.form['b']=="Search":
-            query = request.form['query']
-            num_results = searchtags(query)[0]
-            results = searchtags(query)[1]
+            query = request.form['query'].lower()
+            subject = request.form['subject']
+            print subject
+            num_results = searchtags(query, subject)[0]
+            results = searchtags(query, subject)[1]
             return render_template("search.html",message=str(num_results)+" result(s) found",results=results)
         else:
             return render_template("welcome.html")
@@ -192,11 +190,11 @@ def addhomework(subject,title,desc,summary,work,tags):
     #for homework in homeworks.find():
     #   print(homework)
 
-def searchtags(query):
+def searchtags(query, subject):
     #loops through each homework in database looking for tag in common with query
     num_results = 0
     results = []
-    for homework in homeworks.find({"tags_array": query}):
+    for homework in homeworks.find({"subject": subject, "tags_array": query}):
         num_results+=1
         results.append(homework)
     return (num_results, results)
