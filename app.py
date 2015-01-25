@@ -219,14 +219,18 @@ def search():
     if request.method=="GET":
         return render_template("search.html", TDnum = getTDnum(), MYHWnum = getMYHWnum())
     else:
-            query = request.form['query'].lower()
-            #subject = request.form['subject']
+        query = request.form['query'].lower()
+        subject = request.form['subject']
+        if (query != ""):
             results = homeworks.find({'tags_array': query, 'poster': {'$ne': session['myuser']}, 'status': 'incomplete' })
-            return render_template("search.html",
-                                   message= str(results.count()) + " result(s) found",
-                                   results=results, user = session['myuser'],
-                                   TDnum = getTDnum(),
-                                   MYHWnum = getMYHWnum())
+        else:
+            results = homeworks.find({'subject': subject, 'poster': {'$ne': session['myuser']}, 'status': 'incomplete' })
+        return render_template("search.html",
+                               message= str(results.count()) + " result(s) found",
+                                results=results, user = session['myuser'],
+                                TDnum = getTDnum(),
+                                MYHWnum = getMYHWnum())
+
 """
 def searchtags(query, subject):
     #loops through each homework in database looking for tag in common with query
