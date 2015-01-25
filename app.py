@@ -156,18 +156,27 @@ def myhw():
                            MYHWnum = getMYHWnum(),
                            )
 
-@app.route("/myrecs")
+@app.route("/myrecs", methods= ["GET", "POST"])
 @authenticate("/myrecs")
 def myrecs():
-    return render_template("myrecs.html",homeworks = homeworks.find(), user=session['myuser'], TDnum = getTDnum(), MYHWnum = getMYHWnum())
+    return render_template("myrecs.html",
+                           homeworks = homeworks.find(),
+                           user=session['myuser'],
+                           TDnum = getTDnum(),
+                           MYHWnum = getMYHWnum())
 
 @app.route("/viewhw/<idnum>", methods=["GET", "POST"])
 #@authenticate("/viewhw/<idnum>")
 def viewhw(idnum):
     homework = homeworks.find_one({"_id":ObjectId(idnum)})
     if request.method=="GET":
-        return render_template("viewhw.html", homework = homework, user = session['myuser'], TDnum = getTDnum(), MYHWnum = getMYHWnum())
+        return render_template("viewhw.html",
+                               homework = homework,
+                               user = session['myuser'],
+                               TDnum = getTDnum(),
+                               MYHWnum = getMYHWnum())
     elif request.form['b']=="Claim":
+        homework = homeworks.find_one({"_id":ObjectId(idnum)})
         homework['status'] = "in progress"
         homework['assignedTo'] = session['myuser']
         homeworks.save(homework)
@@ -180,6 +189,17 @@ def viewhw(idnum):
         user['points'] = user['points'] + 1
         db.info.save(user)
         return redirect(url_for("todo"))
+
+@app.route("/claim/<idnum>")
+#@authenticate("/claim/<idnum>")
+def claim(idnum):
+    homework = homeworks.find_one({"_id":ObjectId(idnum)})
+    homework['status'] = "in progress"
+    homework['assignedTo'] = session['myuser']
+    homeworks.save(homework)
+    return redirect(url_for("todo"))
+
+
 
 
 
