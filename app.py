@@ -108,25 +108,35 @@ def profile():
 def editprofile():
     if request.method=="GET":
         return render_template("editprofile.html", name = getname(session['myuser']),
-                               username = session['myuser'])
+                               username = session['myuser'],TDnum = getTDnum(), MYHWnum = getMYHWnum())
     else:
         if request.form['b']=="Update":
             message = ""
             newname = request.form['name']
+            newusername = request.form['username']
+            bio = request.form['bio']
             user = db.info.find_one({'user':session['myuser']})
-            user['name'] = newname
+            if newname != None:
+                #db.info.update({'user':session['myuser']},
+                #               {"$set":{'name':newname}},
+                #               upsert = True)
+                user['name'] = newname
+                print "\n\n\n\n"
+                print user['name']
+                print "\n\n\n\n"
+            if newusername != None:
+                #db.info.update({'user':session['myuser']},
+                #               {"$set":{'user':newusername}},
+                #  upsert = True)
+                user['user'] = newusername
+            if bio != None:
+                #db.info.update({'user':session['myuser']},
+                #               {"$set":{'bio':bio}},
+                 #              upsert = True)
+                user['bio'] = bio
             db.info.save(user)
             message = "Update sucessful!" 
-
-            return render_template("editprofile.html", message=message, name=newname) 
-        else:
-            user = db.info.find_one({'user':session['myuser']})
-            return render_template("profile.html",
-                                   name = getname(session['myuser']),
-                                   username = session['myuser'],
-                                   TDnum = getTDnum(),
-                                   MYHWnum = getMYHWnum(),
-                                   points = user['points'])
+            return render_template("editprofile.html", message=message, name=newname, TDnum = getTDnum(), MYHWnum = getMYHWnum())
 
 
 @app.route("/addhw", methods=["GET","POST"])
@@ -137,21 +147,14 @@ def addhw():
         return render_template("addhw.html", message=message, TDnum = getTDnum(), MYHWnum = getMYHWnum())
     else:
         if request.form['b']=="Submit":
-            print ("\n\n\n")
-            print("within the submit")
-            print ("\n\n\n")
             subject = request.form['r']
-            print(subject)
             title = request.form['title']
-            print(title)
             description = request.form['description']
-            print(description)
             work = request.form['work']
-            print(work)
             tags = request.form['tags']
-            print(tags)
             due = request.form['due']
-            print(due)
+            if (title == "" or description == "" or work == "" or due == ""):
+                return render_template("addhw.html", message = "Please fill in all fields.", TDnum=getTDnum(), MYHWnum=getTDnum())
             addhomework(subject,title,description,work,due,tags)
             return render_template("addhw.html", message="Homework successfully posted.", TDnum = getTDnum(), MYHWnum = getMYHWnum())
 
@@ -200,6 +203,12 @@ def viewhw(idnum):
         db.info.save(user)
         return redirect(url_for("todo"))
 
+@app.route("/delete/<idnum>")
+#@authenticate("/delete/<idnum>")
+def delete(idnum):
+    homeworks.remove( {"_id": ObjectId(idnum)});
+    return redirect(url_for("myhw"))
+
 @app.route("/claim/<idnum>")
 #@authenticate("/claim/<idnum>")
 def claim(idnum):
@@ -220,14 +229,18 @@ def search():
     if request.method=="GET":
         return render_template("search.html", TDnum = getTDnum(), MYHWnum = getMYHWnum())
     else:
-            query = request.form['query'].lower()
-            #subject = request.form['subject']
+        query = request.form['query'].lower()
+        subject = request.form['subject']
+        if (query != ""):
             results = homeworks.find({'tags_array': query, 'poster': {'$ne': session['myuser']}, 'status': 'incomplete' })
-            return render_template("search.html",
-                                   message= str(results.count()) + " result(s) found",
-                                   results=results, user = session['myuser'],
-                                   TDnum = getTDnum(),
-                                   MYHWnum = getMYHWnum())
+        else:
+            results = homeworks.find({'subject': subject, 'poster': {'$ne': session['myuser']}, 'status': 'incomplete' })
+        return render_template("search.html",
+                               message= str(results.count()) + " result(s) found",
+                                results=results, user = session['myuser'],
+                                TDnum = getTDnum(),
+                                MYHWnum = getMYHWnum())
+
 """
 def searchtags(query, subject):
     #loops through each homework in database looking for tag in common with query
@@ -243,7 +256,6 @@ def searchtags(query, subject):
             results.append(homework)
     return (num_results, results)
 """
-
 
 def getname(uname):
     users = db.info.find()
@@ -276,7 +288,7 @@ def adduser(uname,pword,name):
     if db.info.find_one({'user':uname}) == None:
         bio = ""
         #we still have to add other database elements (like rankings and stuff)
-        d = {'user':uname,'pass':pword, 'name':name, 'bio':bio,'points': 0}
+        d = {'user':uname,'pass':pword, 'name':name, 'bio':bio, 'points': 0}
         db.info.insert(d)
         return True
     return False
@@ -287,7 +299,7 @@ def addhomework(subject,title,desc,work,due,tags):
             "title":title,
             "description":desc,
             "work":work,
-            "date":datetime.datetime.utcnow(),
+            "date": str(datetime.date.today()),
             "due": due,
             "poster":session['myuser'],
             "tags_string":tags.lower(),
@@ -312,5 +324,6 @@ if __name__=="__main__":
     client = MongoClient()
     db = client['1258']
     homeworks = db['homeworks']
+    info = db['info']
     app.debug=True
     app.run()
