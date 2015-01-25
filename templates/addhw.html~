@@ -12,37 +12,36 @@ Add a Homework
 	<h4>Choose your subject</h4>
 	<div class="radio">
 	  <label>
-	    <input type="radio" name="r" value="english" checked>
+	    <input type="radio" name="r" value="English" checked>
 	    English
 	  </label>
 	</div>
 	<div class="radio">
 	  <label>
-	    <input type="radio" name="r" value="history">
+	    <input type="radio" name="r" value="History">
 	    History
 	  </label>
 	</div>
 	<div class="radio">
 	  <label>
-	    <input type="radio" name="r" value="math">
+	    <input type="radio" name="r" value="Math">
 	    Math
 	  </label>
 	</div>
 	<div class="radio">
 	  <label>
-	    <input type="radio" name="r" value="science">
+	    <input type="radio" name="r" value="Science">
 	    Science
 	  </label>
 	</div>
-	<textarea class="form-control" name="title" rows="2">Assignment title</textarea>
-	<textarea class="form-control" name="description" rows="10">Assignment description</textarea>
-	<textarea class="form-control" name="summary" rows="10">Summary of your work</textarea>
-	<textarea class="form-control" name="content" rows="20">Your work</textarea>
-	<textarea class="form-control" name="tags" rows="2">Tags separated by spaces</textarea>
+	<textarea class="form-control" name="title" rows="2" placeholder="Assignment title"></textarea>
+	<textarea class="form-control" name="due" rows="2" placeholder="Due date/time"></textarea>
+	<textarea class="form-control" name="description" rows="10" placeholder="What's the assignment?"></textarea>
+	<textarea class="form-control" name="content" rows="20" placeholder="What do you have so far?"></textarea>
+	<textarea class="form-control" name="tags" rows="2" placeholder="Put your tags separated by commas here"></textarea>
 	<br>
 	<input type="submit" name="b" class="btn btn-default" value="Submit">
 	<br>
-	
       </form>
 
 {% endblock %}
