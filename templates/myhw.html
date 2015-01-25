@@ -11,7 +11,7 @@ My Homework
   <div class="container-fluid">
     <div class="panel-heading">
       <h3 class="panel-title">
-	<b>Incomplete:</b><br><br></h3>
+	<br><b>Incomplete:</b><br><br></h3>
     </div>
     {% for homework in incomplete %}
     <div class="row-fluid">
@@ -22,7 +22,7 @@ My Homework
 	<div class="panel-body">
 	  <div class="col-md-2">
 	    <br>
-	    <a href="/viewhw/{{homework['_id']}}"><button class="btn btn-default">View</button></a>
+	    <a href="/viewhw/{{homework['_id']}}"><button class="btn btn-primary">View</button></a>
 	    <br>
 	  </div>
 	  <div class="col-md-10">
@@ -47,7 +47,7 @@ My Homework
   <div class="container-fluid">
     <div class="panel-heading">
       <h3 class="panel-title">
-	<b>In Progress:</b><br><br></h3>
+	<br><b>In Progress:</b><br><br></h3>
     </div>
     {% for homework in inprogress %}
     <div class="row-fluid">
@@ -58,7 +58,7 @@ My Homework
 	<div class="panel-body">
 	  <div class="col-md-2">
 	    <br>
-	    <a href="/viewhw/{{homework['_id']}}"><button class="btn btn-default">View</button></a>
+	    <a href="/viewhw/{{homework['_id']}}"><button class="btn btn-primary">View</button></a>
 	    <br>
 	  </div>
 	  <div class="col-md-10">
@@ -67,10 +67,8 @@ My Homework
 	    Posted: {{homework['date']}}<br>
 	    Due: {{homework['due']}}<br>
 	    Assignment: {{homework['description']}}<br>
-	    Assigned to: {{homework['assignedTo']}}
-	    <br>
+	    Assigned to: {{homework['assignedTo']}}<br>
 	  </div>
-
 	</div>
       </div>
     </div>
@@ -84,7 +82,7 @@ My Homework
   <div class="container-fluid">
     <div class="panel-heading">
       <h3 class="panel-title">
-	<b>Complete:</b><br><br></h3>
+	<br><b>Complete:</b><br><br></h3>
     </div>
     {% for homework in completed %}
     <div class="row-fluid">
@@ -95,18 +93,16 @@ My Homework
 	<div class="panel-body">
 	  <div class="col-md-2">
 	    <br>
-	    <a href="/viewhw/{{homework['_id']}}"><button class="btn btn-default">View</button></a>
+	    <a href="/viewhw/{{homework['_id']}}"><button class="btn btn-primary">View</button></a>
 	    <br>
 	  </div>
 	  <div class="col-md-10">
-	    <!-- always show this stuff -->
-	    Subject: {{homework['subject']}} <br>
-	    Posted: {{homework['date']}}<br>
-	    Due: {{homework['due']}}<br>
-	    Assignment: {{homework['description']}}<br>
-	    <br>
+	      <!-- always show this stuff -->
+	      Subject: {{homework['subject']}} <br>
+	      Posted: {{homework['date']}}<br>
+	      Due: {{homework['due']}}<br>
+	      Assignment: {{homework['description']}}<br>
 	  </div>
-
 	</div>
       </div>
     </div>

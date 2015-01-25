@@ -4,58 +4,83 @@
 {% endblock %}
 
 {% block bodycontent %}
-<h2><p class="text-center">{{homework['title']}}</p></h2>
-
-
-<br><br>
-Title: {{homework['title']}}<br>
-Subject: {{homework['subject']}} <br>
-Tagged: {{homework['tags_string']}}<br><br>
-Posted by: {{homework['poster']}}<br>
-Posted on: {{homework['date']}}<br>
-Due: {{homework['due']}}<br><br>
-Assignment: {{homework['description']}}<br>
-Initial Work: {{homework['work']}}<br><br>
-
 
 <!-- complete -->
 {% if homework['status'] == "complete" %}
-Status: complete <br><br>
-Completed By: {{homework['assignedTo']}}<br>
-Their Work: {{homework['help']}}<br>
+<br>
+<div class="panel panel-success">
+  <div class="panel-heading">
+    <h4><p>{{homework['title']}}</p></h4>
+    <h6><p>Subject: {{homework['subject']}}</p></h6>
+  </div>
+  <div class="panel-body">
+    Posted by: {{homework['poster']}}<br>
+    Due: {{homework['due']}}<br>
+    Completed By: {{homework['assignedTo']}}<br><br>
+    <div class="well well-sm">Assignment: {{homework['description']}}</div>
+    <div class="well">Initial Work: {{homework['work']}}</div>
+    <div class="well">Their Work: {{homework['help']}}<br></div>
+  </div>
+</div>
 
 <!-- in progress -->
 {% elif homework['status'] == "in progress" %}
-Status: in progress<br>
+<br>
+<div class="panel panel-warning">
+  <div class="panel-heading">
+    <h4><p>{{homework['title']}}</p></h4>
+    <h6><p>Subject: {{homework['subject']}}</p></h6>
+  </div>
+  <div class="panel-body">
+    Posted by: {{homework['poster']}}<br>
+    Posted on: {{homework['date']}}<br>
+    Due: {{homework['due']}}<br>
+    <!--assigned to you-->
+    <!-- PUT UPLOAD METHOD HERE-->
+    {% if homework['assignedTo'] == user %}
+    Claimed by: you!
+    <br><br>
+    <div class="well well-sm">Assignment: {{homework['description']}}</div>
+    <div class="well">Initial Work: {{homework['work']}}</div>
+    <form method="POST">
+      <textarea class="form-control" name="help" rows="10" placeholder="Put your suggestions here"></textarea><br>
+      <input type="submit" name="b" class="btn btn-default" value="Submit"><br>
+    </form>
 
-<!--assigned to you-->
-<!-- PUT UPLOAD METHOD HERE-->
-{% if homework['assignedTo'] == user %}
-Claimed by: you!
-<br><br>
-<form method="POST">
-  <textarea class="form-control" name="help" rows="10">Put your suggestions here</textarea><br>
-  <input type="submit" name="b" class="btn btn-default" value="Submit">
+      <!--assigned to someone else-->
+      {% else %}
+      Claimed by:{{homework['assignedTo']}}<br><br>
+      <div class="well well-sm">Assignment: {{homework['description']}}</div>
+      <div class="well">Initial Work: {{homework['work']}}</div><br>
+      {% endif %}
+      <div class="well well-sm">{{homework['tags_string']}}</div>
+  </div>
+</div>
 
-  <!--assigned to someone else-->
-  {% else %}
-  Claimed by: {{homework['assignedTo']}}<br>
-  {% endif %}
+<!--incomplete-->
+{% else %}
+<br>
+<div class="panel panel-danger">
+  <div class="panel-heading">
+    <h4><p>{{homework['title']}}</p></h4>
+    <h6><p>Subject: {{homework['subject']}}</p></h6>
+  </div>
+  <div class="panel-body">
+    Posted by: {{homework['poster']}}<br>
+    Posted on: {{homework['date']}}<br>
+    Due: {{homework['due']}}<br><br>
+    <div class="well well-sm">Assignment: {{homework['description']}}</div>
+    <div class="well">Initial Work: {{homework['work']}}</div>
+    <!--claim button-->
+    {% if homework['poster'] != user %}
+    <br><br>
+    <form role="form" class="form" method="POST">
+      <input type="submit" name="b" class="btn btn-default" value="Claim">
+    </form>
+    {% endif %}
+    <div class="well well-sm">{{homework['tags_string']}}</div>
+  </div>
+</div>
+{% endif %}
 
-  <!--incomplete-->
-  {% else %}
-  Status: incomplete
-
-  <!--claim button-->
-  {% if homework['poster'] != user %}
-  <br><br>
-  <form role="form" class="form" method="POST">
-    <input type="submit" name="b" class="btn btn-default" value="Claim">
-  </form>
-  {% endif %}
-
-  {% endif %}
-
-
-
-  {% endblock %}
+{% endblock %}
