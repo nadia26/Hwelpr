@@ -214,7 +214,6 @@ def search():
         if request.form['b']=="Search":
             query = request.form['query'].lower()
             subject = request.form['subject']
-            print subject
             num_results = searchtags(query, subject)[0]
             results = searchtags(query, subject)[1]
             return render_template("search.html",message=str(num_results)+" result(s) found",results=results,TDnum = getTDnum(), MYHWnum = getMYHWnum())
