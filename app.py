@@ -147,16 +147,35 @@ def addhw():
         return render_template("addhw.html", message=message, TDnum = getTDnum(), MYHWnum = getMYHWnum())
     else:
         if request.form['b']=="Submit":
+            due = request.form['due']
             subject = request.form['r']
             title = request.form['title']
             description = request.form['description']
             work = request.form['work']
             tags = request.form['tags']
-            due = request.form['due']
-            if (title == "" or description == "" or work == "" or due == ""):
-                return render_template("addhw.html", message = "Please fill in all fields.", TDnum=getTDnum(), MYHWnum=getTDnum())
+            if ((not checkDate(due)) or title == "" or description == "" or work == "" or due == ""):
+                return render_template("addhw.html", message = "Please fill in all fields correctly.", TDnum=getTDnum(), MYHWnum=getTDnum())
             addhomework(subject,title,description,work,due,tags)
             return render_template("addhw.html", message="Homework successfully posted.", TDnum = getTDnum(), MYHWnum = getMYHWnum())
+
+def checkDate(due):
+    correctDate = None
+    try:
+        newDate = datetime.datetime(int(due[:4]), int(due[5:7]), int(due[8:]))
+        correctDate = True
+    except:
+        correctDate = False
+    """
+    print("\n\n\n")
+    print(due[:4])
+    print(due[5:7])
+    print(due[8:])
+    print(correctDate)
+    print("\n\n\n")
+    """
+    return correctDate
+
+
 
 @app.route("/myhw")
 @authenticate("/myhw")

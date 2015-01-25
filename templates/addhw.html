@@ -1,11 +1,27 @@
 {% extends "base.html" %}
+
+<style>
+    .boxed {
+        border: 1px solid red;
+        width: 500px;
+        margin: 0 auto;
+        text-align: center;
+    }
+</style>
+
+
 {% block title %}
+<div class="boxed">
 Add a Homework
+</div>
 {% endblock %}
+
 
 {% block bodycontent %}
       <h2><p class="text-center">Add a Homework</p></h2>
-      <p class="text-center">{{message}}</p></h2>
+{% if message %}
+      <p class="text-center" style="border: 1px solid red; width: 500px; margin: 0 auto; text-align: center;">{{message}}</p></h2>
+{% endif %}
       <center><h4>Choose your subject</h4></center>
       <form method="POST">
 	<center>
