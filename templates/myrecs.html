@@ -8,8 +8,8 @@ My Recommendations
 <br>
 <div class="panel">
   <div class="container-fluid">
+      <br>
     {% for homework in homeworks %}
-    {% if homework['poster'] != user and homework['status'] == "incomplete" %}
     <div class="row-fluid">
       <div class="panel panel-info">
 	<div class="panel-heading">
@@ -32,7 +32,7 @@ My Recommendations
 	    </div>
 	  </div>
 	</div>
-	{% endif %}
+
       </div>
     </div>
     {% endfor %}
