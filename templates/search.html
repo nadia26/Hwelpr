@@ -16,13 +16,13 @@ Search
       {% for x in subjects %}
       {% if x == subject %}
       <label class="btn btn-danger">
-	<span class="glyphicon glyphicon-pencil"></span>
-	<input type="radio" name="subject" class="btn btn-default" value={{x}}>{{x}}
+	<span class="glyphicon glyphicon-"+{{x[1]}}></span>
+	<input type="radio" name="subject" class="btn btn-default" value={{x[0]}}>{{x[0]}}
       </label>
       {% else %}
       <label class="btn btn-primary">
-	<span class="glyphicon glyphicon-pencil"></span>
-	<input type="radio" name="subject" class="btn btn-default" value={{x}}>{{x}}
+	<span class="glyphicon glyphicon-"+{{x[1]}}></span>
+	<input type="radio" name="subject" class="btn btn-default" value={{x[0]}}>{{x[0]}}
       </label>
       {% endif %}
       {% endfor %}

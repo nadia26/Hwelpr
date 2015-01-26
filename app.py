@@ -223,7 +223,7 @@ def claim(idnum):
 @authenticate("/search")
 def search():
     message=""
-    subjects = ["English", "History", "Math", "Science"]
+    subjects = [["English","book"],["History","globe"],["Math","stats"],["Science","leaf"]]
     if request.method=="GET":
         return render_template("search.html",subjects=subjects, TDnum = getTDnum(), MYHWnum = getMYHWnum())
     else:
