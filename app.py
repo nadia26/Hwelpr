@@ -67,11 +67,12 @@ def signup():
             password = request.form["signpassword"]
             password2 = request.form["signpassword2"]
             name = request.form["name"]
+            bio = request.form["bio"]
             #mongo adding user stuff:
             if (len(username)<3 or len(password)<3):
                 return render_template("signup.html",message="Please fill in required elements. Each required element must have at least 3 characters.")
             elif(password == password2):
-                if adduser(username,password,name):
+                if adduser(username,password,name,bio):
                     return redirect(url_for('login'))
                 else:
                     return render_template("signup.html", message="Username taken. Try Again.")
@@ -96,13 +97,14 @@ def profile():
         return render_template("profile.html",
                                name = getname(session['myuser']),
                                username = session['myuser'],
+                               bio = getbio(session['myuser']),
                                points = getpoints(session['myuser']),
                                MYHWnum = getMYHWnum(),
                                TDnum = getTDnum())
     else:
         if request.form['b']=="Edit profile":
             return redirect(url_for('editprofile'))
-
+'''
 @app.route("/editprofile", methods=["GET","POST"])
 @authenticate("/editprofile")
 def editprofile():
@@ -137,7 +139,7 @@ def editprofile():
             db.info.save(user)
             message = "Update sucessful!" 
             return render_template("editprofile.html", message=message, name=newname, TDnum = getTDnum(), MYHWnum = getMYHWnum())
-
+'''
 
 @app.route("/addhw", methods=["GET","POST"])
 @authenticate("/addhw")
@@ -188,10 +190,10 @@ def myhw():
                            MYHWnum = getMYHWnum(),
                            )
 
-@app.route("/myrecs")
-@authenticate("/myrecs")
-def myrecs():
-    return render_template("myrecs.html",
+@app.route("/browse")
+@authenticate("/browse")
+def browse():
+    return render_template("browse.html",
                            homeworks = homeworks.find(),
                            user=session['myuser'],
                            TDnum = getTDnum(),
@@ -280,6 +282,12 @@ def getname(uname):
         if user['user'] == uname:
             return user['name']
 
+def getbio(uname):
+    users = db.info.find()
+    for user in users:
+        if user['user'] == uname:
+            return user['bio']
+
 def getpoints(uname):
     users = db.info.find()
     for user in users:
@@ -301,9 +309,8 @@ def authenticate(uname,pword):
                 return True
     return False
 
-def adduser(uname,pword,name):
+def adduser(uname,pword,name,bio):
     if db.info.find_one({'user':uname}) == None:
-        bio = ""
         #we still have to add other database elements (like rankings and stuff)
         d = {'user':uname,'pass':pword, 'name':name, 'bio':bio, 'points': 0}
         db.info.insert(d)
