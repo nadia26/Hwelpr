@@ -6,7 +6,7 @@ from functools import wraps
 from bson.objectid import ObjectId
 
 app = Flask(__name__)
-app.secret_key = 'secret'
+app.config["SECRET_KEY"] = 'secret'
 
 
 def authenticate(page):
@@ -349,4 +349,5 @@ if __name__=="__main__":
     homeworks = db['homeworks']
     info = db['info']
     app.debug=True
+    app.secret_key = 'secret'
     app.run()
