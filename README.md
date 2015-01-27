@@ -3,7 +3,7 @@ I'm Hwelpr: The homework help site
 
 ## Description
 ######A site designed to help people collaborate on homework assignments for effective learning.
-######found <a href="hwelper.info.tm">here</a>
+######found <a href="http://hwelper.info.tm">here</a>
 
 ## Team
 ###VERONIKA "i got a haircut" AZZARA
