@@ -5,25 +5,17 @@ Profile
 
 {% block bodycontent %}
 
-<h1><p class="text-center">{{user['name']}}'s Profile</p></h1>
-
+<div class="page-header">
+  <h1><p class="text-center">{{user['name']}}'s Profile</p></h1>
+</div>
 <form method="POST">
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-6">
-      <p class="text-right"><img src="{{ url_for( 'static',filename='testimage.jpg') }}" alt="test image" height="170" width="170" class="img-rounded"></p>
-      <p class="text-right">
-	<!-- <input type="submit" name="b" class="btn btn-default" value="Edit profile"> -->
-      </p>
-    </div>
-    <div class="col-md-6">
-      <h2><p class="text-left">Name: <b>{{user['name']}}</b></p></h2>
-      <h2><p class="text-left">Username: <b>{{user['user']}}</b></p></h2>
-      <h3><p class="text-left">Bio:</p></h3>
-      <!--- <h3><p class="text-left">Subject rankings:</p></h3> -->
-      <h3><p class="text-left">Overall rating: {{rating}}%</p></h3>
-      <h3><p class="text-left">Homeworks reviewed: {{user['completed']}}</p></h3>
-    </div>
+      <h2><p class="text-center">Name: <b>{{user['name']}}</b></p></h2>
+      <h2><p class="text-center">Username: <b>{{user['user']}}</b></p></h2>
+      <h3><p class="text-center">Bio: <b>{{bio}}</b></p></h3>
+      <h3><p class="text-center">Overall rating: <b>{{rating}}%</b></p></h3>
+      <h3><p class="text-center">Homeworks reviewed: <b>{{user['completed']}}</b></p></h3>
   </div>
 </div>
 </form>

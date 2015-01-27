@@ -131,68 +131,15 @@ def profile():
         rating = int(((completes + 0.0) / (incompletes + completes)) * 100)
     if request.method=="GET":
         return render_template("profile.html",
-<<<<<<< HEAD
                                name = getname(session['myuser']),
                                username = session['myuser'],
                                bio = getbio(session['myuser']),
                                points = getpoints(session['myuser']),
-=======
                                user = user,
                                rating = rating,
->>>>>>> nadia
                                MYHWnum = getMYHWnum(),
                                TDnum = getTDnum())
-"""
-    else:
-        if request.form['b']=="Edit profile":
-            return redirect(url_for('editprofile'))
-<<<<<<< HEAD
-'''
-=======
-            """
 
-"""
->>>>>>> nadia
-@app.route("/editprofile", methods=["GET","POST"])
-@authenticate("/editprofile")
-def editprofile():
-    if request.method=="GET":
-        return render_template("editprofile.html", name = getname(session['myuser']),
-                               username = session['myuser'],TDnum = getTDnum(), MYHWnum = getMYHWnum())
-    else:
-        if request.form['b']=="Update":
-            message = ""
-            newname = request.form['name']
-            newusername = request.form['username']
-            bio = request.form['bio']
-            user = db.info.find_one({'user':session['myuser']})
-            if newname != None:
-                #db.info.update({'user':session['myuser']},
-                #               {"$set":{'name':newname}},
-                #               upsert = True)
-                user['name'] = newname
-                print "\n\n\n\n"
-                print user['name']
-                print "\n\n\n\n"
-            if newusername != None:
-                #db.info.update({'user':session['myuser']},
-                #               {"$set":{'user':newusername}},
-                #  upsert = True)
-                user['user'] = newusername
-            if bio != None:
-                #db.info.update({'user':session['myuser']},
-                #               {"$set":{'bio':bio}},
-                 #              upsert = True)
-                user['bio'] = bio
-            db.info.save(user)
-            message = "Update sucessful!" 
-            return render_template("editprofile.html", message=message, name=newname, TDnum = getTDnum(), MYHWnum = getMYHWnum())
-<<<<<<< HEAD
-'''
-=======
-"""
-
->>>>>>> nadia
 
 @app.route("/addhw", methods=["GET","POST"])
 @authenticate("/addhw")
@@ -243,13 +190,14 @@ def myhw():
                            MYHWnum = getMYHWnum(),
                            )
 
-<<<<<<< HEAD
 @app.route("/browse")
 @authenticate("/browse")
 def browse():
     return render_template("browse.html",
                            homeworks = homeworks.find(),
-=======
+                           TDnum = getTDnum(),
+                           MYHWnum = getMYHWnum(),
+                       )
 @app.route("/myrecs")
 @authenticate("/myrecs")
 def myrecs():
@@ -259,7 +207,6 @@ def myrecs():
             recs.append(hw)
     return render_template("myrecs.html",
                            homeworks = recs,
->>>>>>> nadia
                            user=session['myuser'],
                            TDnum = getTDnum(),
                            MYHWnum = getMYHWnum())
@@ -313,7 +260,6 @@ def search():
     if request.method=="GET":
         return render_template("search.html",subjects=subjects, TDnum = getTDnum(), MYHWnum = getMYHWnum())
     else:
-        
         query = request.form['query'].lower()
         subject = request.form['subject']
         if (query != ""):
@@ -326,34 +272,10 @@ def search():
                 finalresults.append(hw)
         return render_template("search.html",
                                message= str(results.count()) + " result(s) found",
-<<<<<<< HEAD
-                                results=results, subject=subject, subjects=subjects, user = session['myuser'],
-                                TDnum = getTDnum(),
-                                MYHWnum = getMYHWnum())
-=======
-                               results=results,
-                               user = session['myuser'],
+                               results=results, subject=subject, subjects=subjects, user = session['myuser'],
                                TDnum = getTDnum(),
                                MYHWnum = getMYHWnum())
->>>>>>> nadia
 
-"""
-def searchtags(query, subject):
-    #loops through each homework in database looking for tag in common with query
-    num_results = 0
-    results = []
-    if (subject!="None"):
-        for homework in homeworks.find({"subject": subject, "tags_array": query}):
-            num_results+=1
-            results.append(homework)
-    else:
-        for homework in homeworks.find({"tags_array": query}):
-            num_results+=1
-            results.append(homework)
-    return (num_results, results)
-"""
-
-<<<<<<< HEAD
 def getname(uname):
     users = db.info.find()
     for user in users:
@@ -372,8 +294,6 @@ def getpoints(uname):
         if user['user'] == uname:
             return user['points']
 
-=======
->>>>>>> nadia
 def getpword(uname):
     names = db.info.find()
     for name in names:
@@ -391,9 +311,7 @@ def authenticate(uname,pword):
 
 def adduser(uname,pword,name,bio):
     if db.info.find_one({'user':uname}) == None:
-        #we still have to add other database elements (like rankings and stuff)
-        incomplete = 0
-        d = {'user':uname,'pass':pword, 'name':name, 'bio':bio, 'completed': 0, 'incomplete': incomplete}
+        d = {'user':uname,'pass':pword, 'name':name, 'bio':bio, 'points':0, 'completed': 0, 'incomplete': 0}
         db.info.insert(d)
         return True
     return False
