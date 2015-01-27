@@ -47,7 +47,7 @@ searching, tag system, rating system/user statistics/assigning medals, notificat
  * DONE!
 
 
-##Potential future improvements
+####Potential future improvements
 * 1. search modified by rating
 * 2. suggestions of work to do based on user's rating
 * 3. contained editing
