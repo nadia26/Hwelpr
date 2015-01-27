@@ -1,4 +1,4 @@
-Hwelpr: The homework help site
+I'm Hwelpr: The homework help site
 ====================
 
 ## Description
@@ -32,21 +32,25 @@ searching, tag system, rating system/user statistics/assigning medals, notificat
  * DONE!
 * 4. claiming/status
  * by 1/9
+ * DONE!
 * 5. submitting
  * by 1/12
+ * DONE!
 * 6. tag system
  * by 1/14
-* 7. point system/medals
+ * DONE!
+* 7. point system
  * by 1/15
+ * DONE!
 * 8. search by tag (in order)
  * by 1/19
 * 9. suggesting
  * by 1/19
 * 10. notifications
  * 1/22
+ * DONE!
 * 11. contained editing
  * 1/26
 * 12. messaging/email notifications
  * 1/26
-
 
