@@ -4,5 +4,20 @@ Welcome!
 {% endblock %}
 
 {% block bodycontent %}
-      <h2><p class="text-center">Welcome {{ name }}!</p></h2>
+<div class="page-header">
+  <center> <img src="{{ url_for( 'static',filename='hwelprlogo1.png') }}" alt="HWelper" width=300 height=300></center>
+      <h1><p class="text-center">Welcome {{ name }}!</p></h1>
+</div>
+<p class="lead text-center">
+  HWelpr allows you to post homeworks and get help on those homeworks from your peers.<br>
+  It also allows you to help other people with their homework.<br>
+  The more homeworks you help, the more points you recieve, and the better ratings you have.<br>
+  But <b>be careful!</b> If you claim a homework and don't help on time, you're ratings will go down.<br><br>
+  To check out your profile, go to the <b><a href="http://localhost:5000/profile">Profile</a></b> tab above.<br><br>
+  To begin adding homeworks, go to the <b><a href="http://localhost:5000/addhw">Add HW</a></b> tab above.<br><br>
+  To look at all the homeworks you have posted and check their statuses, go to the <b><a href="http://localhost:5000/myhw">My HW</a></b> tab above.<br><br>
+  To browse incomplete homeworks, go to the <b><a href="http://localhost:5000/browse">Browse</a></b> tab above.<br><br>
+  To look for homeworks with specific subjects or tabs, go to the <b><a href="http://localhost:5000/search">Search</a></b> tab above.<br><br>
+  To look at the homeworks that you have claimed, go to the <b><a href="http://localhost:5000/todo">To Do</a></b> tab above.<br>
+</p>
 {% endblock %}

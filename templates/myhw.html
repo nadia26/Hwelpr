@@ -4,9 +4,10 @@ My Homework
 {% endblock %}
 
 {% block bodycontent %}
-<h2><p class="text-center">My Homework</p></h2>
-<h4><p class="lead text-center">to add more homeworks, go to the ADD HW tab above.</p></h4>
-
+<div class="page-header">
+  <h1><p class="text-center">My Homework</p></h1>
+  <p class="lead text-center">to add more homeworks, go to the ADD HW tab above.</p>
+</div>
 {% if incomplete.count() > 0 %}
 <div class="panel panel-default">
   <div class="container-fluid">

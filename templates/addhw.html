@@ -18,37 +18,36 @@ Add a Homework
 
 
 {% block bodycontent %}
-      <h2><p class="text-center">Add a Homework</p></h2>
+<div class="page-header">
+      <h1><p class="text-center">Add Homework</p></h1>
+      <p class="lead text-center">Fill out the form below to add a new homework.</p>
+</div>
 {% if message %}
       <p class="text-center" style="border: 1px solid red; width: 500px; margin: 0 auto; text-align: center;">{{message}}</p></h2>
 {% endif %}
-      <center><h4>Choose your subject</h4></center>
+
       <form method="POST">
-	<center>
-	  <div class="btn-group" data-toggle="buttons">
-	    <label class="btn btn-primary">
-	      <span class="glyphicon glyphicon-book"></span>
-	      <input type="radio" name="r" class="btn btn-default" value="English" checked>English
-	    </label>
-	    <label class="btn btn-primary">
-	      <span class="glyphicon glyphicon-globe"></span>
-	      <input type="radio" name="r" class="btn btn-default" value="History">History
-	    </label>
-	    <label class="btn btn-primary">
-	      <span class="glyphicon glyphicon-stats"></span>
-	      <input type="radio" name="r" class="btn btn-default" value="Math">Math
-	    </label>
-	    <label class="btn btn-primary">
-	      <span class="glyphicon glyphicon-leaf"></span>
-	      <input type="radio" name="r" class="btn btn-default" value="Science">Science
-	    </label>
-	  </div>
-	</center>
+	<p class="lead"><small>Step 1: What subject is your assignment for?</small></p>
+	  <select class="form-control" name="r">
+	    <option>English</span></option>
+	    <option>History</option>
+	    <option>Math</option>
+	    <option>Science</option>
+	  </select>
 	<br>
+	<p class="lead"><small>Step 2: What's the name of your assignment?</small></p>
 	<textarea class="form-control" name="title" rows="2" placeholder="Assignment title"></textarea>
+	<br>
+	<p class="lead"><small>Step 3: When is your assignment due?</small></p>
 	<textarea class="form-control" name="due" rows="2" placeholder="Due date (in the form YYYY-MM-DD)"></textarea>
-	<textarea class="form-control" name="description" rows="10" placeholder="What's the assignment?"></textarea>
-	<textarea class="form-control" name="work" rows="20" placeholder="What do you have so far?"></textarea>
+	<br>
+	<p class="lead"><small>Step 4: What's the assignment?</small></p>
+	<textarea class="form-control" name="description" rows="10" placeholder="Enter assignment description here"></textarea>
+	<br>
+	<p class="lead"><small>Step 5: What do you have so far?</small></p>
+	<textarea class="form-control" name="work" rows="20" placeholder="Enter assignment body here"></textarea>
+	<br>
+	<p class="lead"><small>Step 6: Enter tags for your assignment so that other users can find you.</small></p>
 	<textarea class="form-control" name="tags" rows="2" placeholder="Put your tags separated by commas here"></textarea>
 	<br>
 	<input type="submit" name="b" class="btn btn-default" value="Submit">
