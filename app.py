@@ -1,4 +1,5 @@
-import datetime
+from datetime import datetime
+import math
 from flask import Flask, flash, render_template, request, redirect, url_for, session, escape
 from pymongo import MongoClient
 from functools import wraps
@@ -84,27 +85,74 @@ def signup():
 @app.route("/welcome")
 @authenticate("/welcome")
 def welcome():
-    return render_template("welcome.html", name=getname(session['myuser']), TDnum = getTDnum(), MYHWnum = getMYHWnum())
+    checkDates(db.info.find_one({'user': session['myuser']}))
+    return render_template("welcome.html", name=db.info.find_one({'user':session['myuser']})['name'], TDnum = getTDnum(), MYHWnum = getMYHWnum())
+
+def checkDates(user):
+    #print"\n\n\ncheckdates method"
+    user = db.info.find_one({'user':session['myuser']})
+    #print "USER:"
+    #print(user)
+    todos = homeworks.find({"assignedTo":user['user']})
+    #print "TODOS:"
+    #print(todos)
+    for hw in todos:
+        if overdue(hw['due']):
+            user['incomplete'] = user['incomplete'] + 1;
+            hw['status'] = "incomplete"
+            hw['assignedTo'] = None
+            db.info.save(user)
+            homeworks.save(hw)
+
+def overdue(due):
+    duedate = datetime(int(due[:4]), int(due[5:7]), int(due[8:10])).date()
+    if duedate < datetime.today().date():
+    #if duedate < datetime(2016, 12, 12).date():
+        return True
+    return False
+
+
+
 
 @app.route("/todo")
 def todo():
+    checkDates(db.info.find_one({'user':session['myuser']}))
     return render_template("todo.html", homeworks = homeworks.find({"assignedTo": session['myuser'], "status": "in progress"}), TDnum = getTDnum(), MYHWnum = getMYHWnum())
 
 @app.route("/profile", methods=["GET","POST"])
 @authenticate("/profile")
 def profile():
+    user = db.info.find_one({'user':session['myuser']})
+    incompletes = user['incomplete']
+    completes = user['completed']
+    if incompletes == 0 or completes == 0:
+        rating = 100
+    else:
+        rating = int(((completes + 0.0) / (incompletes + completes)) * 100)
     if request.method=="GET":
         return render_template("profile.html",
+<<<<<<< HEAD
                                name = getname(session['myuser']),
                                username = session['myuser'],
                                bio = getbio(session['myuser']),
                                points = getpoints(session['myuser']),
+=======
+                               user = user,
+                               rating = rating,
+>>>>>>> nadia
                                MYHWnum = getMYHWnum(),
                                TDnum = getTDnum())
+"""
     else:
         if request.form['b']=="Edit profile":
             return redirect(url_for('editprofile'))
+<<<<<<< HEAD
 '''
+=======
+            """
+
+"""
+>>>>>>> nadia
 @app.route("/editprofile", methods=["GET","POST"])
 @authenticate("/editprofile")
 def editprofile():
@@ -139,7 +187,12 @@ def editprofile():
             db.info.save(user)
             message = "Update sucessful!" 
             return render_template("editprofile.html", message=message, name=newname, TDnum = getTDnum(), MYHWnum = getMYHWnum())
+<<<<<<< HEAD
 '''
+=======
+"""
+
+>>>>>>> nadia
 
 @app.route("/addhw", methods=["GET","POST"])
 @authenticate("/addhw")
@@ -161,27 +214,27 @@ def addhw():
             return render_template("addhw.html", message="Homework successfully posted.", TDnum = getTDnum(), MYHWnum = getMYHWnum())
 
 def checkDate(due):
-    correctDate = None
     try:
-        newDate = datetime.datetime(int(due[:4]), int(due[5:7]), int(due[8:]))
-        correctDate = True
+        newDate = datetime(int(due[:4]), int(due[5:7]), int(due[8:10])).date()
+        #print "\n\n\n"
+        #print newDate
+        if newDate > datetime.today().date():
+            result = True
+        else:
+            result = False
     except:
-        correctDate = False
-    """
-    print("\n\n\n")
-    print(due[:4])
-    print(due[5:7])
-    print(due[8:])
-    print(correctDate)
-    print("\n\n\n")
-    """
-    return correctDate
-
+        result = False
+    #print result
+    return result
 
 
 @app.route("/myhw")
 @authenticate("/myhw")
 def myhw():
+    progress = homeworks.find({"poster":session['myuser'], "status": "in progress"})
+    #print progress
+    for hw in progress:
+        checkDates(hw['assignedTo'])
     return render_template("myhw.html",
                            incomplete = homeworks.find({"poster":session['myuser'] , "status": "incomplete"}),
                            inprogress = homeworks.find({"poster":session['myuser'] , "status":"in progress"}),
@@ -190,11 +243,23 @@ def myhw():
                            MYHWnum = getMYHWnum(),
                            )
 
+<<<<<<< HEAD
 @app.route("/browse")
 @authenticate("/browse")
 def browse():
     return render_template("browse.html",
                            homeworks = homeworks.find(),
+=======
+@app.route("/myrecs")
+@authenticate("/myrecs")
+def myrecs():
+    recs = []
+    for hw in homeworks.find():
+        if (not overdue(hw['due'])) and (hw['poster'] != session['myuser']) and (hw['status'] == "incomplete"):
+            recs.append(hw)
+    return render_template("myrecs.html",
+                           homeworks = recs,
+>>>>>>> nadia
                            user=session['myuser'],
                            TDnum = getTDnum(),
                            MYHWnum = getMYHWnum())
@@ -220,7 +285,7 @@ def viewhw(idnum):
         homework['status'] = "complete"
         homeworks.save(homework)
         user = db.info.find_one({'user':session['myuser']})
-        user['points'] = user['points'] + 1
+        user['completed'] = user['completed'] + 1
         db.info.save(user)
         return redirect(url_for("todo"))
 
@@ -248,17 +313,29 @@ def search():
     if request.method=="GET":
         return render_template("search.html",subjects=subjects, TDnum = getTDnum(), MYHWnum = getMYHWnum())
     else:
+        
         query = request.form['query'].lower()
         subject = request.form['subject']
         if (query != ""):
             results = homeworks.find({'tags_array': query, 'poster': {'$ne': session['myuser']}, 'status': 'incomplete' })
         else:
             results = homeworks.find({'subject': subject, 'poster': {'$ne': session['myuser']}, 'status': 'incomplete' })
+        finalresults = []
+        for hw in finalresults:
+            if (not overdue(hw['due'])) and (hw['poster'] != session['myuser']) and (hw['status'] == "incomplete"):
+                finalresults.append(hw)
         return render_template("search.html",
                                message= str(results.count()) + " result(s) found",
+<<<<<<< HEAD
                                 results=results, subject=subject, subjects=subjects, user = session['myuser'],
                                 TDnum = getTDnum(),
                                 MYHWnum = getMYHWnum())
+=======
+                               results=results,
+                               user = session['myuser'],
+                               TDnum = getTDnum(),
+                               MYHWnum = getMYHWnum())
+>>>>>>> nadia
 
 """
 def searchtags(query, subject):
@@ -276,6 +353,7 @@ def searchtags(query, subject):
     return (num_results, results)
 """
 
+<<<<<<< HEAD
 def getname(uname):
     users = db.info.find()
     for user in users:
@@ -294,6 +372,8 @@ def getpoints(uname):
         if user['user'] == uname:
             return user['points']
 
+=======
+>>>>>>> nadia
 def getpword(uname):
     names = db.info.find()
     for name in names:
@@ -312,7 +392,8 @@ def authenticate(uname,pword):
 def adduser(uname,pword,name,bio):
     if db.info.find_one({'user':uname}) == None:
         #we still have to add other database elements (like rankings and stuff)
-        d = {'user':uname,'pass':pword, 'name':name, 'bio':bio, 'points': 0}
+        incomplete = 0
+        d = {'user':uname,'pass':pword, 'name':name, 'bio':bio, 'completed': 0, 'incomplete': incomplete}
         db.info.insert(d)
         return True
     return False
@@ -323,7 +404,7 @@ def addhomework(subject,title,desc,work,due,tags):
             "title":title,
             "description":desc,
             "work":work,
-            "date": str(datetime.date.today()),
+            "date": str(datetime.today().date()),
             "due": due,
             "poster":session['myuser'],
             "tags_string":tags.lower(),
