@@ -10,6 +10,7 @@ My Recommendations
 </div>
 <div class="panel">
   <div class="container-fluid">
+      <br>
     {% for homework in homeworks %}
     {% if homework['poster'] != user and homework['status'] == "incomplete" %}
     <div class="row-fluid">
