@@ -42,15 +42,13 @@ searching, tag system, rating system/user statistics/assigning medals, notificat
 * 7. point system
  * by 1/15
  * DONE!
-* 8. search by tag (in order)
- * by 1/19
-* 9. suggesting
- * by 1/19
-* 10. notifications
+* 8. notifications
  * 1/22
  * DONE!
-* 11. contained editing
- * 1/26
-* 12. messaging/email notifications
- * 1/26
 
+
+##Potential future improvements
+* 1. search modified by rating
+* 2. suggestions of work to do based on user's rating
+* 3. contained editing
+* 4. messaging/email notifications
