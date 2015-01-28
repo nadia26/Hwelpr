@@ -5,6 +5,8 @@ I'm Hwelpr: The homework help site
 ######A site designed to help people collaborate on homework assignments for effective learning.
 ######found <a href="http://hwelper.info.tm">here</a>
 
+######Watch the video! https://www.youtube.com/watch?v=vWpNXDupzRw
+
 ## Team
 ###VERONIKA "i got a haircut" AZZARA
 ####team leader
